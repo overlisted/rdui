@@ -14,6 +14,7 @@ struct RDUIPosition {
 static struct RDUIPosition RDUIPositionOrigin = {.x = 0, .y = 0};
 
 enum RDUIEvent {
+	RDUIEvent_render,
 	RDUIEvent_key,
 	RDUIEvent_button,
 	RDUIEvent_motion
@@ -35,7 +36,6 @@ struct RDUIEventData_motion {
 	int mask;
 };
 
-typedef void (*RDUIRendererFunction)(struct RDUINode* node);
 typedef void (*RDUIEventReceiverFunction)(struct RDUINode* node, enum RDUIEvent event, void* data);
 
 struct RDUINode {
@@ -46,7 +46,6 @@ struct RDUINode {
 
 	void* data;
 
-	RDUIRendererFunction renderer_function;
   RDUIEventReceiverFunction event_receiver_function;
 };
 
@@ -61,16 +60,12 @@ void RDUIInit();
 struct RDUINode* RDUINewNode(
 	struct RDUINode* parent,
 	void* data,
-	RDUIRendererFunction renderer_function,
 	RDUIEventReceiverFunction event_receiver_function
 );
 
 void RDUIPushChild(struct RDUINode* node, struct RDUINode* child);
 
-void RDUIRenderRoot();
 void RDUIDispatchEvent(enum RDUIEvent event, void* data);
-
-struct RDUIPosition RDUINoOpRenderer(struct RDUINode* node, struct RDUIPosition position);
 void RDUINoOpEventReceiver(struct RDUINode* node, enum RDUIEvent event, void* data);
 
 // Handlers for rawdraw events
