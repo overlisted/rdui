@@ -50,10 +50,10 @@ void RDUIHandleKeyImpl(int keycode, int bDown) {
 
 void RDUIHandleButtonImpl(int x, int y, int button, int bDown) {
 	struct RDUIEventData_button event = {.position = {.x = x, .y = y}, .button = button, .bDown = bDown};
-	RDUIDispatchEvent(RDUIEvent_key, &event);
+	RDUIDispatchEvent(RDUIEvent_button, &event);
 }
 
 void RDUIHandleMotionImpl(int x, int y, int mask) {
 	struct RDUIEventData_motion event = {.position = {.x = x, .y = y}, .mask = mask};
-	RDUIDispatchEvent(RDUIEvent_key, &event);
+	RDUIDispatchEvent(RDUIEvent_motion, &event);
 }
