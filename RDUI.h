@@ -51,7 +51,7 @@ struct RDUINode {
 
 #define RDUIIfEventIs(if_name) \
   struct RDUIEventData_##if_name* if_name##_event = data; \
-  if(RDUIEvent_##if_name)
+  if(event == RDUIEvent_##if_name)
 
 extern struct RDUINode* RDUIRootNode;
 
