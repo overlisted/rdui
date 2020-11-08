@@ -23,7 +23,8 @@ struct RDUINode* RDUINewNode(
 void RDUIPushChild(struct RDUINode* node, struct RDUINode* child) {
 	node->children_count++;
 
-	if(realloc(node->children, node->children_count * sizeof(void*))) {
+	node->children = realloc(node->children, node->children_count * sizeof(void*));
+	if(node->children != NULL) {
     node->children[node->children_count - 1] = child;
   } else {
     node->children_count--;
