@@ -18,8 +18,13 @@ void HandleMotion(int x, int y, int mask) {
 
 void HandleDestroy() {}
 
+void ButtonSecondClickedHandle(struct RDUIButtonData* data) {
+	exit(0);
+}
+
 void ButtonClickedHandler(struct RDUIButtonData* data) {
-	data->color += 0x10;
+	data->text = "Not again, please!";
+	data->clicked_handler = ButtonSecondClickedHandle;
 }
 
 int main(int argv, char* argc[]) {
