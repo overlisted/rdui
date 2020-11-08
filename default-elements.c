@@ -31,14 +31,19 @@ static void RDUIButtonEventReceiver(struct RDUINode* node, enum RDUIEvent event,
 		button_width += button_data->padding * 2;
 		button_height += button_data->padding * 2;
 
-		if(
-			button_event->button == 1
-			 && button_event->bDown == 1
-			 && button_event->position.x > button_data->position.x
-			 && button_event->position.y > button_data->position.y
-			 && button_event->position.x < button_data->position.x + button_width
-			 && button_event->position.y < button_data->position.y + button_height
-		) button_data->clicked_handler(button_data);
+
+		if(button_event->button == 1) {
+			if(button_event->bDown == 1) button_data->color -= 0x101010;
+			if(button_event->bDown == 0) button_data->color += 0x101010;
+
+			if(
+				button_event->bDown == 0
+				 && button_event->position.x > button_data->position.x
+				 && button_event->position.y > button_data->position.y
+				 && button_event->position.x < button_data->position.x + button_width
+				 && button_event->position.y < button_data->position.y + button_height
+			) button_data->clicked_handler(button_data);
+		}
 	}
 }
 
