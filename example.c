@@ -1,4 +1,7 @@
 #include "RDUI.h"
+#include "default-elements.h"
+
+#include "stdio.h"
 
 void HandleKey(int keycode, int bDown) {
 	if(keycode == 65307) exit(0);
@@ -15,6 +18,10 @@ void HandleMotion(int x, int y, int mask) {
 
 void HandleDestroy() {}
 
+void ButtonClickedHandler(struct RDUIButtonData* data) {
+	data->color += 0x10;
+}
+
 int main(int argv, char* argc[]) {
 	RDUIInit();
 
@@ -23,9 +30,34 @@ int main(int argv, char* argc[]) {
 
 	CNFGSetup("RDUI Example", 800, 600);
 
+	struct RDUIButtonData button_data = {
+		.text = "Click on me!",
+		.text_size = 10,
+		.padding = 5,
+		.color = 0x555555,
+		.text_color = 0xffffff,
+		.position = {
+			.x = 200,
+			.y = 200
+		},
+
+		.clicked_handler = ButtonClickedHandler
+	};
+
+	struct RDUINode* button = RDUINewButton(RDUIRootNode, &button_data);
+
+	RDUIPushChild(RDUIRootNode, button);
+
 	while(1) {
 		CNFGHandleInput();
 		CNFGClearFrame();
+
+		CNFGColor(0x444444);
+		CNFGTackRectangle(10, 10, 100, 100);
+
+		RDUIDispatchEvent(RDUIEvent_render, NULL);
+
+		CNFGSwapBuffers();
 	}
 
 	return 0;
