@@ -5,7 +5,27 @@
 struct RDUINode;
 
 enum RDUIEvent {
-	RDUIEvent_click
+	RDUIEvent_key,
+	RDUIEvent_button,
+	RDUIEvent_motion
+};
+
+struct RDUIEventData_key {
+	int keycode;
+	int bDown;
+};
+
+struct RDUIEventData_button {
+	int x;
+	int y;
+	int button;
+	int bDown;
+};
+
+struct RDUIEventData_motion {
+	int x;
+	int y;
+	int mask;
 };
 
 typedef struct RDPoint (*RDUIRendererFunction)(struct RDUINode* node, struct RDPoint position);
@@ -26,7 +46,7 @@ struct RDUINode {
 extern struct RDUINode* RDUIRootNode;
 
 #define RDUIIfEventIs(if_name) \
-  struct RDUIEvent_##if_name##_Data* if_name##_event = data; \
+  struct RDUIEventData_##if_name* if_name##_event = data; \
   if(RDUIEvent_##if_name)
 
 struct RDUINode* RDUINewNode(
@@ -41,3 +61,20 @@ void RDUIPushChild(struct RDUINode* node, struct RDUINode* child);
 void RDUIRenderRoot();
 void RDUIDispatchEvent(enum RDUIEvent, void* data);
 
+
+// Handlers for rawdraw events
+
+void RDUIHandleKeyImpl(int keycode, int bDown) {
+	struct RDUIEventData_key event = {.keycode = keycode, .bDown = bDown};
+	RDUIDispatchEvent(RDUIEvent_key, &event);
+}
+
+void RDUIHandleButtonImpl(int x, int y, int button, int bDown) {
+	struct RDUIEventData_button event = {.x = x, .y = y, .button = button, .bDown = bDown};
+	RDUIDispatchEvent(RDUIEvent_key, &event);
+}
+
+void RDUIHandleMotionImpl(int x, int y, int mask) {
+	struct RDUIEventData_motion event = {.x = x, .y = y, .mask = mask};
+	RDUIDispatchEvent(RDUIEvent_key, &event);
+}
