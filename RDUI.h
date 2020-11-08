@@ -35,7 +35,7 @@ struct RDUIEventData_motion {
 	int mask;
 };
 
-typedef struct RDUIPosition (*RDUIRendererFunction)(struct RDUINode* node, struct RDUIPosition position);
+typedef void (*RDUIRendererFunction)(struct RDUINode* node);
 typedef void (*RDUIEventReceiverFunction)(struct RDUINode* node, enum RDUIEvent event, void* data);
 
 struct RDUINode {
