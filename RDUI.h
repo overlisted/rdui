@@ -4,6 +4,11 @@
 
 struct RDUINode;
 
+struct RDUIPosition {
+	int x;
+	int y;
+};
+
 enum RDUIEvent {
 	RDUIEvent_key,
 	RDUIEvent_button,
@@ -16,19 +21,17 @@ struct RDUIEventData_key {
 };
 
 struct RDUIEventData_button {
-	int x;
-	int y;
+	struct RDUIPosition position;
 	int button;
 	int bDown;
 };
 
 struct RDUIEventData_motion {
-	int x;
-	int y;
+	struct RDUIPosition position;
 	int mask;
 };
 
-typedef struct RDPoint (*RDUIRendererFunction)(struct RDUINode* node, struct RDPoint position);
+typedef struct RDUIPosition (*RDUIRendererFunction)(struct RDUINode* node, struct RDUIPosition position);
 typedef void (*RDUIEventReceiverFunction)(struct RDUINode* node, enum RDUIEvent event, void* data);
 
 struct RDUINode {
@@ -70,11 +73,11 @@ void RDUIHandleKeyImpl(int keycode, int bDown) {
 }
 
 void RDUIHandleButtonImpl(int x, int y, int button, int bDown) {
-	struct RDUIEventData_button event = {.x = x, .y = y, .button = button, .bDown = bDown};
+	struct RDUIEventData_button event = {.position = {.x = x, .y = y}, .button = button, .bDown = bDown};
 	RDUIDispatchEvent(RDUIEvent_key, &event);
 }
 
 void RDUIHandleMotionImpl(int x, int y, int mask) {
-	struct RDUIEventData_motion event = {.x = x, .y = y, .mask = mask};
+	struct RDUIEventData_motion event = {.position = {.x = x, .y = y}, .mask = mask};
 	RDUIDispatchEvent(RDUIEvent_key, &event);
 }
