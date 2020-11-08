@@ -62,7 +62,7 @@ struct RDUINode* RDUINewNode(
 void RDUIPushChild(struct RDUINode* node, struct RDUINode* child);
 
 void RDUIRenderRoot();
-void RDUIDispatchEvent(enum RDUIEvent, void* data);
+void RDUIDispatchEvent(enum RDUIEvent event, void* data);
 
 
 // Handlers for rawdraw events
