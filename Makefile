@@ -13,3 +13,6 @@ run: example
 
 rdui: rdui.c rawdraw/CNFG.c
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+
+clean:
+	rm example
