@@ -1,11 +1,15 @@
+CC = gcc
+CFLAGS = -O1 -g
+LDFLAGS = -lX11 -lm -lpthread
+
 example: example.c rdui.c rawdraw/CNFG.c
-	gcc -o $@ $^ -lX11 -lm -lpthread -lXinerama -lXext -lGL -g
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 install:
-	mv example $(PREFIX)/bin
+	mv example $(PREFIX)/bin/rdui_example
 
-run:
+run: example
 	./example
 
 rdui: rdui.c rawdraw/CNFG.c
-	gcc -o $@ $^ -lX11 -lm -lpthread -lXinerama -lXext -lGL -g
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
