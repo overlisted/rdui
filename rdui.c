@@ -6,6 +6,23 @@ void RDUIInit() {
 	RDUIRootNode = RDUINewNode(NULL, NULL, RDUINoOpRenderer, RDUINoOpEventReceiver);
 }
 
+struct RDUINode* RDUINewNode(
+	struct RDUINode* parent,
+	void* data,
+	RDUIRendererFunction renderer_function,
+	RDUIEventReceiverFunction event_receiver_function
+) {
+	struct RDUINode* node = malloc(sizeof(struct RDUINode));
+
+	node->parent = parent;
+	node->data = data;
+	node->renderer_function = renderer_function;
+	node->event_receiver_function = event_receiver_function;
+
+	node->children = malloc(0);
+	node->children_count = 0;
+}
+
 void RDUIPushChild(struct RDUINode* node, struct RDUINode* child) {
 	node->children_count++;
 
