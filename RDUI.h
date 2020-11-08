@@ -68,22 +68,11 @@ void RDUIPushChild(struct RDUINode* node, struct RDUINode* child);
 void RDUIRenderRoot();
 void RDUIDispatchEvent(enum RDUIEvent event, void* data);
 
-struct RDUIPosition RDUINoOpRenderer(struct RDUINode* node, struct RDUIPosition position) {}
-void RDUINoOpEventReceiver(struct RDUINode* node, enum RDUIEvent event, void* data) {}
+struct RDUIPosition RDUINoOpRenderer(struct RDUINode* node, struct RDUIPosition position);
+void RDUINoOpEventReceiver(struct RDUINode* node, enum RDUIEvent event, void* data);
 
 // Handlers for rawdraw events
 
-void RDUIHandleKeyImpl(int keycode, int bDown) {
-	struct RDUIEventData_key event = {.keycode = keycode, .bDown = bDown};
-	RDUIDispatchEvent(RDUIEvent_key, &event);
-}
-
-void RDUIHandleButtonImpl(int x, int y, int button, int bDown) {
-	struct RDUIEventData_button event = {.position = {.x = x, .y = y}, .button = button, .bDown = bDown};
-	RDUIDispatchEvent(RDUIEvent_key, &event);
-}
-
-void RDUIHandleMotionImpl(int x, int y, int mask) {
-	struct RDUIEventData_motion event = {.position = {.x = x, .y = y}, .mask = mask};
-	RDUIDispatchEvent(RDUIEvent_key, &event);
-}
+void RDUIHandleKeyImpl(int keycode, int bDown);
+void RDUIHandleButtonImpl(int x, int y, int button, int bDown);
+void RDUIHandleMotionImpl(int x, int y, int mask);

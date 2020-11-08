@@ -52,3 +52,21 @@ static void RDUIDispatchHierarchyEvent(struct RDUINode* node, enum RDUIEvent eve
 void RDUIDispatchEvent(enum RDUIEvent event, void* data) {
 	RDUIDispatchHierarchyEvent(RDUIRootNode, event, data);
 }
+
+struct RDUIPosition RDUINoOpRenderer(struct RDUINode* node, struct RDUIPosition position) {}
+void RDUINoOpEventReceiver(struct RDUINode* node, enum RDUIEvent event, void* data) {}
+
+void RDUIHandleKeyImpl(int keycode, int bDown) {
+	struct RDUIEventData_key event = {.keycode = keycode, .bDown = bDown};
+	RDUIDispatchEvent(RDUIEvent_key, &event);
+}
+
+void RDUIHandleButtonImpl(int x, int y, int button, int bDown) {
+	struct RDUIEventData_button event = {.position = {.x = x, .y = y}, .button = button, .bDown = bDown};
+	RDUIDispatchEvent(RDUIEvent_key, &event);
+}
+
+void RDUIHandleMotionImpl(int x, int y, int mask) {
+	struct RDUIEventData_motion event = {.position = {.x = x, .y = y}, .mask = mask};
+	RDUIDispatchEvent(RDUIEvent_key, &event);
+}
