@@ -35,13 +35,13 @@ void RDUIPushChild(struct RDUINode* node, struct RDUINode* child) {
 
 #define ForEachChild(node) for(size_t i = 0; i < node->children_count; i++)
 
-static void RDUIRenderHierarchy(struct RDUINode* node, struct RDUIPosition position) {
-	position = node->renderer_function(node, position);
-	ForEachChild(node) RDUIRenderHierarchy(node->children[i], position);
+static void RDUIRenderHierarchy(struct RDUINode* node) {
+	node->renderer_function(node);
+	ForEachChild(node) RDUIRenderHierarchy(node->children[i]);
 }
 
 void RDUIRenderRoot() {
-	RDUIRenderHierarchy(RDUIRootNode, RDUIPositionOrigin);
+	RDUIRenderHierarchy(RDUIRootNode);
 }
 
 static void RDUIDispatchHierarchyEvent(struct RDUINode* node, enum RDUIEvent event, void* data) {
