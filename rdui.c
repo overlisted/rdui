@@ -18,6 +18,8 @@ struct RDUINode* RDUINewNode(
 
 	node->children = malloc(0);
 	node->children_count = 0;
+
+	return node;
 }
 
 void RDUIPushChild(struct RDUINode* node, struct RDUINode* child) {
