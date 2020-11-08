@@ -3,6 +3,7 @@
 struct RDUINode* RDUIRootNode = NULL;
 
 void RDUIInit() {
+	RDUIRootNode = RDUINewNode(NULL, NULL, RDUINoOpEventReceiver);
 }
 
 struct RDUINode* RDUINewNode(
