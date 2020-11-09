@@ -50,3 +50,61 @@ static void RDUIButtonEventReceiver(struct RDUINode* node, enum RDUIEvent event,
 struct RDUINode* RDUINewButton(struct RDUINode* parent, struct RDUIButtonData* data) {
 	return RDUINewNode(parent, data, RDUIButtonEventReceiver);
 }
+
+static void RDUICheckboxEventReceiver(struct RDUINode* node, enum RDUIEvent event, void* data) {
+	struct RDUICheckboxData* checkbox_data = node->data;
+
+	RDUIIfEventIs(render) {
+		CNFGColor(checkbox_data->color);
+		CNFGTackRectangle(
+			checkbox_data->position.x,
+			checkbox_data->position.y,
+			checkbox_data->position.x + checkbox_data->size,
+			checkbox_data->position.y + checkbox_data->size
+		);
+
+		if(checkbox_data->active) {
+			CNFGColor(checkbox_data->checkmark_color);
+			CNFGTackSegment(
+				checkbox_data->position.x + checkbox_data->padding,
+				checkbox_data->position.y + checkbox_data->size / 2,
+				checkbox_data->position.x + checkbox_data->size / 2,
+				checkbox_data->position.y - checkbox_data->padding + checkbox_data->size
+			);
+
+			CNFGTackSegment(
+				checkbox_data->position.x - checkbox_data->padding + checkbox_data->size,
+				checkbox_data->position.y + checkbox_data->padding,
+				checkbox_data->position.x + checkbox_data->size / 2,
+				checkbox_data->position.y - checkbox_data->padding + checkbox_data->size
+			);
+		}
+	}
+
+	RDUIIfEventIs(button) {
+		if(button_event->button == 1) {
+			if(button_event->bDown == 1) checkbox_data->color -= 0x101010;
+			if(button_event->bDown == 0) checkbox_data->color += 0x101010;
+
+			if(
+				button_event->bDown == 0
+				 && button_event->position.x > checkbox_data->position.x
+				 && button_event->position.y > checkbox_data->position.y
+				 && button_event->position.x < checkbox_data->position.x + checkbox_data->size
+				 && button_event->position.y < checkbox_data->position.y + checkbox_data->size
+			) {
+				if(checkbox_data->active) {
+					checkbox_data->active = 0;
+					checkbox_data->deactivate_handler(checkbox_data);
+				} else {
+					checkbox_data->active = 1;
+					checkbox_data->activate_handler(checkbox_data);
+				}
+			}
+		}
+	}
+}
+
+struct RDUINode* RDUINewCheckbox(struct RDUINode* parent, struct RDUICheckboxData* data) {
+	return RDUINewNode(parent, data, RDUICheckboxEventReceiver);
+}

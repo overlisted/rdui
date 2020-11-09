@@ -14,3 +14,17 @@ struct RDUIButtonData {
 };
 
 struct RDUINode* RDUINewButton(struct RDUINode* parent, struct RDUIButtonData* data);
+
+struct RDUICheckboxData {
+	char active;
+	int size;
+	int padding;
+	int color;
+	int checkmark_color;
+	struct RDUIPosition position;
+
+	void (*activate_handler)(struct RDUICheckboxData* data);
+	void (*deactivate_handler)(struct RDUICheckboxData* data);
+};
+
+struct RDUINode* RDUINewCheckbox(struct RDUINode* parent, struct RDUICheckboxData* data);
