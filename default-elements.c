@@ -47,8 +47,8 @@ static void RDUIButtonEventReceiver(struct RDUINode* node, enum RDUIEvent event,
 	}
 }
 
-struct RDUINode* RDUINewButton(struct RDUINode* parent, struct RDUIButtonData* data) {
-	return RDUINewNode(parent, data, RDUIButtonEventReceiver);
+struct RDUINode* RDUINewButton(struct RDUIButtonData* data) {
+	return RDUINewNode(data, RDUIButtonEventReceiver);
 }
 
 static void RDUICheckboxEventReceiver(struct RDUINode* node, enum RDUIEvent event, void* data) {
@@ -105,6 +105,6 @@ static void RDUICheckboxEventReceiver(struct RDUINode* node, enum RDUIEvent even
 	}
 }
 
-struct RDUINode* RDUINewCheckbox(struct RDUINode* parent, struct RDUICheckboxData* data) {
-	return RDUINewNode(parent, data, RDUICheckboxEventReceiver);
+struct RDUINode* RDUINewCheckbox(struct RDUICheckboxData* data) {
+	return RDUINewNode(data, RDUICheckboxEventReceiver);
 }

@@ -13,7 +13,7 @@ struct RDUIButtonData {
 	void (*clicked_handler)(struct RDUIButtonData* data);
 };
 
-struct RDUINode* RDUINewButton(struct RDUINode* parent, struct RDUIButtonData* data);
+struct RDUINode* RDUINewButton(struct RDUIButtonData* data);
 
 struct RDUICheckboxData {
 	char active;
@@ -27,4 +27,4 @@ struct RDUICheckboxData {
 	void (*deactivate_handler)(struct RDUICheckboxData* data);
 };
 
-struct RDUINode* RDUINewCheckbox(struct RDUINode* parent, struct RDUICheckboxData* data);
+struct RDUINode* RDUINewCheckbox(struct RDUICheckboxData* data);
