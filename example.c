@@ -72,8 +72,8 @@ int main(int argv, char* argc[]) {
 		.deactivate_handler = CheckboxDeactivateHandler
 	};
 
-	struct RDUINode* button = RDUINewButton(RDUIRootNode, &button_data);
-	struct RDUINode* checkbox = RDUINewCheckbox(RDUIRootNode, &checkbox_data);
+	struct RDUINode* button = RDUINewButton(&button_data);
+	struct RDUINode* checkbox = RDUINewCheckbox(&checkbox_data);
 
 	RDUIPushChild(RDUIRootNode, button);
 	RDUIPushChild(RDUIRootNode, checkbox);

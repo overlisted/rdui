@@ -58,7 +58,6 @@ extern struct RDUINode* RDUIRootNode;
 void RDUIInit();
 
 struct RDUINode* RDUINewNode(
-	struct RDUINode* parent,
 	void* data,
 	RDUIEventReceiverFunction event_receiver_function
 );

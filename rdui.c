@@ -3,17 +3,16 @@
 struct RDUINode* RDUIRootNode = NULL;
 
 void RDUIInit() {
-	RDUIRootNode = RDUINewNode(NULL, NULL, RDUINoOpEventReceiver);
+	RDUIRootNode = RDUINewNode(NULL, RDUINoOpEventReceiver);
 }
 
 struct RDUINode* RDUINewNode(
-	struct RDUINode* parent,
 	void* data,
 	RDUIEventReceiverFunction event_receiver_function
 ) {
 	struct RDUINode* node = malloc(sizeof(struct RDUINode));
 
-	node->parent = parent;
+	node->parent = NULL;
 	node->data = data;
 	node->event_receiver_function = event_receiver_function;
 
@@ -29,6 +28,7 @@ void RDUIPushChild(struct RDUINode* node, struct RDUINode* child) {
 	node->children = realloc(node->children, node->children_count * sizeof(void*));
 	if(node->children != NULL) {
     node->children[node->children_count - 1] = child;
+		child->parent = node;
   } else {
     node->children_count--;
   }
