@@ -27,6 +27,14 @@ void ButtonClickedHandler(struct RDUIButtonData* data) {
 	data->clicked_handler = ButtonSecondClickedHandle;
 }
 
+void CheckboxActivateHandler(struct RDUICheckboxData* data) {
+
+}
+
+void CheckboxDeactivateHandler(struct RDUICheckboxData* data) {
+
+}
+
 int main(int argv, char* argc[]) {
 	RDUIInit();
 
@@ -49,9 +57,26 @@ int main(int argv, char* argc[]) {
 		.clicked_handler = ButtonClickedHandler
 	};
 
+	struct RDUICheckboxData checkbox_data = {
+		.active = 0,
+		.size = 50,
+		.padding = 5,
+		.color = 0x232323,
+		.checkmark_color = 0xffffff,
+		.position = {
+			.x = 100,
+			.y = 200
+		},
+
+		.activate_handler = CheckboxActivateHandler,
+		.deactivate_handler = CheckboxDeactivateHandler
+	};
+
 	struct RDUINode* button = RDUINewButton(RDUIRootNode, &button_data);
+	struct RDUINode* checkbox = RDUINewCheckbox(RDUIRootNode, &checkbox_data);
 
 	RDUIPushChild(RDUIRootNode, button);
+	RDUIPushChild(RDUIRootNode, checkbox);
 
 	while(1) {
 		CNFGHandleInput();
