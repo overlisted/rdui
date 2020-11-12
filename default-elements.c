@@ -117,6 +117,11 @@ struct RDUINode* RDUINewCheckbox(struct RDUICheckboxData* data) {
 static struct RDUIFieldData* focused_field;
 static char shift_down = 0;
 
+static void PutCursorInValidState(struct RDUIFieldData* field) {
+	size_t length = strlen(field->value);
+	if(field->cursor > length) field->cursor = length;
+}
+
 static void RDUIFieldEventReceiver(struct RDUINode* node, enum RDUIEvent event, void* data) {
 	struct RDUIFieldData* field_data = node->data;
 
@@ -181,8 +186,16 @@ static void RDUIFieldEventReceiver(struct RDUINode* node, enum RDUIEvent event, 
 				field_data->value = UtilStringInsertOne(field_data->value, field_data->cursor, key_event->keycode);
 				field_data->cursor++;
 			} else {
-				if(key_event->keycode == 65288) field_data->value = UtilStringCutEnd(field_data->value, 1);
-				if(key_event->keycode == 65535) field_data->value = UtilStringRemoveOne(field_data->value, field_data->cursor + 1);
+				if(key_event->keycode == 65288) {
+					field_data->value = UtilStringCutEnd(field_data->value, 1);
+					PutCursorInValidState(field_data);
+				}
+
+				if(key_event->keycode == 65535) {
+					field_data->value = UtilStringRemoveOne(field_data->value, field_data->cursor + 1);
+					PutCursorInValidState(field_data);
+				}
+
 				if(key_event->keycode == 65361) if(field_data->cursor > 0) field_data->cursor--;
 				if(key_event->keycode == 65363) if(field_data->cursor < strlen(field_data->value)) field_data->cursor++;
 				if(key_event->keycode == 65307) focused_field = NULL;
