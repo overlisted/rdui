@@ -9,6 +9,7 @@ struct RDUIButtonData {
 	int color;
 	int text_color;
 	struct RDUIPosition position;
+	char is_held;
 
 	void (*clicked_handler)(struct RDUIButtonData* data);
 };
