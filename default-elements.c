@@ -186,8 +186,8 @@ static void RDUIFieldEventReceiver(struct RDUINode* node, enum RDUIEvent event, 
 				field_data->cursor++;
 			} else {
 				if(key_event->keycode == 65288) {
-					field_data->value = UtilStringCutEnd(field_data->value, 1);
-					PutCursorInValidState(field_data);
+					field_data->value = UtilStringRemoveOne(field_data->value, field_data->cursor);
+					field_data->cursor--;
 				}
 
 				if(key_event->keycode == 65535) {
