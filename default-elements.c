@@ -1,4 +1,7 @@
 #include "default-elements.h"
+#include "util.h"
+
+#include <string.h>
 
 static void RDUIButtonEventReceiver(struct RDUINode* node, enum RDUIEvent event, void* data) {
 	struct RDUIButtonData* button_data = node->data;
@@ -109,4 +112,88 @@ static void RDUICheckboxEventReceiver(struct RDUINode* node, enum RDUIEvent even
 
 struct RDUINode* RDUINewCheckbox(struct RDUICheckboxData* data) {
 	return RDUINewNode(data, RDUICheckboxEventReceiver);
+}
+
+static struct RDUIFieldData* focused_field;
+static char shift_down = 0;
+
+static void RDUIFieldEventReceiver(struct RDUINode* node, enum RDUIEvent event, void* data) {
+	struct RDUIFieldData* field_data = node->data;
+
+	int text_width = 0, text_height = 100;
+	if(*field_data->value != '\0') {
+		CNFGGetTextExtents(field_data->value, &text_width, &text_height, field_data->font_size);
+	}
+
+	struct RDUIPosition pos2 = {
+		.x = field_data->position.x + UtilMax(text_width + field_data->padding * 2, field_data->min_width),
+		.y = field_data->position.y + text_height + field_data->padding * 2
+	};
+
+	RDUIIfEventIs(render) {
+		CNFGColor(field_data->border_color);
+		UtilDrawRectangleBorders(
+			2,
+			field_data->position.x,
+			field_data->position.y,
+			pos2.x,
+			pos2.y
+		);
+
+		CNFGPenX = field_data->position.x + field_data->padding;
+		CNFGPenY = field_data->position.y + field_data->padding;
+		CNFGDrawText(field_data->value, field_data->font_size);
+
+		if(focused_field == field_data) {
+			int cursor_drawing_x, whatever;
+			char* buf = UtilCopyString(field_data->value);
+
+			CNFGGetTextExtents(UtilStringCutAfter(buf, field_data->cursor), &cursor_drawing_x, &whatever, field_data->font_size);
+
+      CNFGColor(0);
+			CNFGTackSegment(
+				field_data->position.x + field_data->padding + cursor_drawing_x,
+				field_data->position.y + field_data->padding,
+				field_data->position.x + field_data->padding + cursor_drawing_x,
+				field_data->position.y + field_data->padding + text_height
+			);
+		}
+	}
+
+	RDUIIfEventIs(button) {
+		if(
+			button_event->button == 1
+			 && button_event->bDown == 1
+			 && button_event->position.x > field_data->position.x
+			 && button_event->position.y > field_data->position.y
+			 && button_event->position.x < pos2.x
+			 && button_event->position.y < pos2.y
+	 	) {
+		  focused_field = field_data;
+		}
+	}
+
+	RDUIIfEventIs(key) {
+		if(key_event->keycode == 65505) shift_down = key_event->bDown;
+
+		if(focused_field == field_data) {
+			if(key_event->keycode >= 32 && key_event->keycode < 127) {
+				field_data->value = UtilStringInsertOne(field_data->value, field_data->cursor, key_event->keycode);
+				field_data->cursor++;
+			} else {
+				if(key_event->keycode == 65288) field_data->value = UtilStringCutEnd(field_data->value, 1);
+				if(key_event->keycode == 65535) field_data->value = UtilStringRemoveOne(field_data->value, field_data->cursor + 1);
+				if(key_event->keycode == 65361) if(field_data->cursor > 0) field_data->cursor--;
+				if(key_event->keycode == 65363) if(field_data->cursor < strlen(field_data->value)) field_data->cursor++;
+				if(key_event->keycode == 65307) focused_field = NULL;
+			}
+		}
+	}
+}
+
+struct RDUINode* RDUINewField(struct RDUIFieldData* data) {
+	data->cursor = 0;
+	data->value = calloc(1, 1);
+
+	return RDUINewNode(data, RDUIFieldEventReceiver);
 }
