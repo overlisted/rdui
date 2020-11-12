@@ -48,8 +48,8 @@ char* UtilStringRemove(char* original, size_t from, size_t to) {
 char* UtilStringRemoveOne(char* original, size_t index) {
 	size_t original_length = strlen(original);
 
+	memmove(original + index - 1, original + index, original_length - index + 1);
 	original = realloc(original, original_length);
-	original[original_length - 1] = '\0';
 
 	return original;
 }
