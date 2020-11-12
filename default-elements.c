@@ -3,6 +3,31 @@
 
 #include <string.h>
 
+static char ProcessClick(
+	struct RDUIEventData_button* event,
+	struct RDUIPosition	element_position,
+	int element_width,
+	int element_height,
+	char* element_is_held
+) {
+	char result = 0;
+	if(event->button == 1) {
+		if(
+			 event->position.x > element_position.x
+			 && event->position.y > element_position.y
+			 && event->position.x < element_position.x + element_width
+			 && event->position.y < element_position.y + element_height
+		) {
+			if(*element_is_held && event->bDown == 0) result = 1;
+			if(event->bDown) *element_is_held = 1;
+		}
+
+		if(!event->bDown) *element_is_held = 0;
+	}
+
+	return result;
+}
+
 static void RDUIButtonEventReceiver(struct RDUINode* node, enum RDUIEvent event, void* data) {
 	struct RDUIButtonData* button_data = node->data;
 
@@ -41,21 +66,8 @@ static void RDUIButtonEventReceiver(struct RDUINode* node, enum RDUIEvent event,
 		button_width += button_data->padding * 2;
 		button_height += button_data->padding * 2;
 
-		if(button_event->button == 1) {
-			if(
-				 button_event->position.x > button_data->position.x
-				 && button_event->position.y > button_data->position.y
-				 && button_event->position.x < button_data->position.x + button_width
-				 && button_event->position.y < button_data->position.y + button_height
-			) {
-				if(button_data->is_held && button_event->bDown == 0) {
-					button_data->color += 0x101010;
-					button_data->clicked_handler(button_data);
-				}
-
-				if(button_event->bDown) button_data->is_held = 1;
-			}
-			if(!button_event->bDown) button_data->is_held = 0;
+		if(ProcessClick(button_event, button_data->position, button_width, button_height, &button_data->is_held)) {
+			button_data->clicked_handler(button_data);
 		}
 	}
 }
