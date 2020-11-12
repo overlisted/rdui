@@ -1,7 +1,10 @@
 #include "RDUI.h"
 #include "default-elements.h"
 
-#include "stdio.h"
+#include "util.h"
+
+#include <stdio.h>
+#include <string.h>
 
 void HandleKey(int keycode, int bDown) {
 	RDUIHandleKeyImpl(keycode, bDown);
@@ -32,6 +35,10 @@ void CheckboxActivateHandler(struct RDUICheckboxData* data) {
 
 void CheckboxDeactivateHandler(struct RDUICheckboxData* data) {
 
+}
+
+void FieldTypeHandler(struct RDUIFieldData* data) {
+	if(!strcmp(data->value, "demo")) UtilStringChange(data->value, "example");
 }
 
 int main(int argv, char* argc[]) {
@@ -80,7 +87,9 @@ int main(int argv, char* argc[]) {
 			.x = 100,
 			.y = 10
 		},
-		.border_color = 0x000000
+		.border_color = 0x000000,
+
+		.type_handler = FieldTypeHandler
 	};
 
 	struct RDUINode* button = RDUINewButton(&button_data);

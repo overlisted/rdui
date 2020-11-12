@@ -14,6 +14,7 @@ char* UtilStringAppendOne(char* original, char to_append);
 char* UtilStringCutEnd(char* original, size_t count);
 char* UtilStringCutAfter(char* original, size_t index);
 char* UtilStringCutStart(char* original, size_t count);
+char* UtilStringChange(char* original,const char* data);
 
 void UtilDrawRectangleBorders(int width, int x1, int y1, int x2, int y2);
 

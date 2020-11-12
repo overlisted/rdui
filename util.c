@@ -95,6 +95,14 @@ char* UtilStringCutStart(char* original, size_t count) {
 	return original + count;
 }
 
+char* UtilStringChange(char* original, const char* data) {
+	size_t data_length = strlen(data) + 1;
+
+	original = realloc(original, data_length);
+
+	memcpy(original, data, data_length);
+}
+
 void UtilDrawRectangleBorders(int width, int x1, int y1, int x2, int y2) {
 	CNFGSetLineWidth(width);
 	CNFGTackSegment(x1, y1, x2, y1);

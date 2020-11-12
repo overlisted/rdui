@@ -38,6 +38,8 @@ struct RDUIFieldData {
 	int border_color;
 	char* value;
 	size_t cursor;
+
+	void (*type_handler)(struct RDUIFieldData* data);
 };
 
 struct RDUINode* RDUINewField(struct RDUIFieldData* data);
