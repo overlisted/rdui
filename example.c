@@ -4,7 +4,6 @@
 #include "stdio.h"
 
 void HandleKey(int keycode, int bDown) {
-	if(keycode == 65307) exit(0);
 	RDUIHandleKeyImpl(keycode, bDown);
 }
 
