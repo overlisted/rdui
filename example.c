@@ -83,7 +83,6 @@ int main(int argv, char* argc[]) {
 		CNFGClearFrame();
 
 		CNFGColor(0x444444);
-		CNFGTackRectangle(10, 10, 100, 100);
 
 		RDUIDispatchEvent(RDUIEvent_render, NULL);
 
