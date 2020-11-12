@@ -101,6 +101,8 @@ char* UtilStringChange(char* original, const char* data) {
 	original = realloc(original, data_length);
 
 	memcpy(original, data, data_length);
+
+	return original;
 }
 
 void UtilDrawRectangleBorders(int width, int x1, int y1, int x2, int y2) {
