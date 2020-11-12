@@ -2,9 +2,7 @@ CC = gcc
 CFLAGS = -O1 -g
 LDFLAGS = -lX11 -lm -lpthread
 
-FILES = rdui.c rawdraw/CNFG.c default-elements.c util.c
-
-example: $(FILES) example.c
+example: example.c
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 install:
@@ -12,9 +10,6 @@ install:
 
 run: example
 	./example
-
-rdui: $(FILES)
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 clean:
 	rm example

@@ -1,3 +1,6 @@
+#define CNFG_IMPLEMENTATION
+#define RDUI_IMPLEMENTATION
+
 #include "RDUI.h"
 #include "default-elements.h"
 

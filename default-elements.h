@@ -45,3 +45,7 @@ struct RDUIFieldData {
 };
 
 struct RDUINode* RDUINewField(struct RDUIFieldData* data);
+
+#ifdef RDUI_IMPLEMENTATION
+#include "default-elements.c"
+#endif
