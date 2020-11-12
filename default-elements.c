@@ -13,7 +13,14 @@ static void RDUIButtonEventReceiver(struct RDUINode* node, enum RDUIEvent event,
 		button_width += button_data->padding * 2;
 		button_height += button_data->padding * 2;
 
-		CNFGColor(button_data->color);
+		int drawn_color;
+		if(button_data->is_held) {
+			drawn_color = button_data->color - 0x030303;
+		} else {
+			drawn_color = button_data->color + 0x030303;
+		}
+
+		CNFGColor(drawn_color);
 		CNFGTackRectangle(
 			button_data->position.x,
 			button_data->position.y,
@@ -34,7 +41,6 @@ static void RDUIButtonEventReceiver(struct RDUINode* node, enum RDUIEvent event,
 		button_width += button_data->padding * 2;
 		button_height += button_data->padding * 2;
 
-
 		if(button_event->button == 1) {
 			if(
 				 button_event->position.x > button_data->position.x
@@ -42,17 +48,21 @@ static void RDUIButtonEventReceiver(struct RDUINode* node, enum RDUIEvent event,
 				 && button_event->position.x < button_data->position.x + button_width
 				 && button_event->position.y < button_data->position.y + button_height
 			) {
-				if(button_event->bDown == 1) button_data->color -= 0x101010;
-				if(button_event->bDown == 0) {
+				if(button_data->is_held && button_event->bDown == 0) {
 					button_data->color += 0x101010;
 					button_data->clicked_handler(button_data);
 				}
+
+				if(button_event->bDown) button_data->is_held = 1;
 			}
+			if(!button_event->bDown) button_data->is_held = 0;
 		}
 	}
 }
 
 struct RDUINode* RDUINewButton(struct RDUIButtonData* data) {
+	data->is_held = 0;
+
 	return RDUINewNode(data, RDUIButtonEventReceiver);
 }
 
