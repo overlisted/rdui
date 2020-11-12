@@ -28,3 +28,16 @@ struct RDUICheckboxData {
 };
 
 struct RDUINode* RDUINewCheckbox(struct RDUICheckboxData* data);
+
+struct RDUIFieldData {
+	int padding;
+	int font_size;
+	int min_width;
+	int max_width;
+	struct RDUIPosition position;
+	int border_color;
+	char* value;
+	size_t cursor;
+};
+
+struct RDUINode* RDUINewField(struct RDUIFieldData* data);
