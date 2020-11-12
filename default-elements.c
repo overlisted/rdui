@@ -206,6 +206,8 @@ static void RDUIFieldEventReceiver(struct RDUINode* node, enum RDUIEvent event, 
 				if(key_event->keycode == KEY_RIGHT_ARROW) if(field_data->cursor < strlen(field_data->value)) field_data->cursor++;
 				if(key_event->keycode == KEY_ESCAPE) focused_field = NULL;
 			}
+
+			field_data->type_handler(field_data);
 		}
 	}
 }
