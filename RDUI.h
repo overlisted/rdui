@@ -72,3 +72,7 @@ void RDUINoOpEventReceiver(struct RDUINode* node, enum RDUIEvent event, void* da
 void RDUIHandleKeyImpl(int keycode, int bDown);
 void RDUIHandleButtonImpl(int x, int y, int button, int bDown);
 void RDUIHandleMotionImpl(int x, int y, int mask);
+
+#ifdef RDUI_IMPLEMENTATION
+#include "rdui.c"
+#endif
