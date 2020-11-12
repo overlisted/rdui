@@ -82,7 +82,14 @@ static void RDUICheckboxEventReceiver(struct RDUINode* node, enum RDUIEvent even
 	struct RDUICheckboxData* checkbox_data = node->data;
 
 	RDUIIfEventIs(render) {
-		CNFGColor(checkbox_data->color);
+		int drawn_color;
+		if(checkbox_data->is_held) {
+			drawn_color = checkbox_data->color - 0x030303;
+		} else {
+			drawn_color = checkbox_data->color + 0x030303;
+		}
+
+		CNFGColor(drawn_color);
 		CNFGTackRectangle(
 			checkbox_data->position.x,
 			checkbox_data->position.y,
