@@ -23,6 +23,7 @@ struct RDUICheckboxData {
 	int color;
 	int checkmark_color;
 	struct RDUIPosition position;
+	char is_held;
 
 	void (*activate_handler)(struct RDUICheckboxData* data);
 	void (*deactivate_handler)(struct RDUICheckboxData* data);

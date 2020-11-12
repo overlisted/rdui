@@ -109,30 +109,21 @@ static void RDUICheckboxEventReceiver(struct RDUINode* node, enum RDUIEvent even
 	}
 
 	RDUIIfEventIs(button) {
-		if(button_event->button == 1) {
-			if(
-				 button_event->position.x > checkbox_data->position.x
-				 && button_event->position.y > checkbox_data->position.y
-				 && button_event->position.x < checkbox_data->position.x + checkbox_data->size
-				 && button_event->position.y < checkbox_data->position.y + checkbox_data->size
-			) {
-				if(button_event->bDown == 1) checkbox_data->color -= 0x101010;
-				if(button_event->bDown == 0) {
-					checkbox_data->color += 0x101010;
-					if(checkbox_data->active) {
-						checkbox_data->active = 0;
-						checkbox_data->deactivate_handler(checkbox_data);
-					} else {
-						checkbox_data->active = 1;
-						checkbox_data->activate_handler(checkbox_data);
-					}
-				}
+		if(ProcessClick(button_event, checkbox_data->position, checkbox_data->size, checkbox_data->size, &checkbox_data->is_held)) {
+			if(checkbox_data->active) {
+				checkbox_data->active = 0;
+				checkbox_data->deactivate_handler(checkbox_data);
+			} else {
+				checkbox_data->active = 1;
+				checkbox_data->activate_handler(checkbox_data);
 			}
 		}
 	}
 }
 
 struct RDUINode* RDUINewCheckbox(struct RDUICheckboxData* data) {
+	data->is_held = 0;
+
 	return RDUINewNode(data, RDUICheckboxEventReceiver);
 }
 
