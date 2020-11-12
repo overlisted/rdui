@@ -71,11 +71,25 @@ int main(int argv, char* argc[]) {
 		.deactivate_handler = CheckboxDeactivateHandler
 	};
 
+	struct RDUIFieldData field_data = {
+		.padding = 5,
+		.font_size = 10,
+		.min_width = 300,
+		.max_width = 1000,
+		.position = {
+			.x = 100,
+			.y = 10
+		},
+		.border_color = 0x000000
+	};
+
 	struct RDUINode* button = RDUINewButton(&button_data);
 	struct RDUINode* checkbox = RDUINewCheckbox(&checkbox_data);
+	struct RDUINode* field = RDUINewField(&field_data);
 
 	RDUIPushChild(RDUIRootNode, button);
 	RDUIPushChild(RDUIRootNode, checkbox);
+	RDUIPushChild(RDUIRootNode, field);
 
 	while(1) {
 		CNFGHandleInput();
