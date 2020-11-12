@@ -125,10 +125,8 @@ static void PutCursorInValidState(struct RDUIFieldData* field) {
 static void RDUIFieldEventReceiver(struct RDUINode* node, enum RDUIEvent event, void* data) {
 	struct RDUIFieldData* field_data = node->data;
 
-	int text_width = 0, text_height = 100;
-	if(*field_data->value != '\0') {
-		CNFGGetTextExtents(field_data->value, &text_width, &text_height, field_data->font_size);
-	}
+	int text_width, text_height;
+	CNFGGetTextExtents(field_data->value, &text_width, &text_height, field_data->font_size);
 
 	struct RDUIPosition pos2 = {
 		.x = field_data->position.x + UtilMax(text_width + field_data->padding * 2, field_data->min_width),
