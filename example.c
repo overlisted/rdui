@@ -51,13 +51,13 @@ int main(int argv, char* argc[]) {
 
 	struct RDUIButtonData button_data = {
 		.text = "Click on me!",
-		.text_size = 10,
+		.text_size = 6,
 		.padding = 5,
 		.color = 0x555555,
 		.text_color = 0xffffff,
 		.position = {
-			.x = 200,
-			.y = 200
+			.x = 70,
+			.y = 10
 		},
 
 		.clicked_handler = ButtonClickedHandler
@@ -70,8 +70,8 @@ int main(int argv, char* argc[]) {
 		.color = 0x232323,
 		.checkmark_color = 0xffffff,
 		.position = {
-			.x = 100,
-			.y = 200
+			.x = 10,
+			.y = 10
 		},
 
 		.activate_handler = CheckboxActivateHandler,
@@ -80,12 +80,12 @@ int main(int argv, char* argc[]) {
 
 	struct RDUIFieldData field_data = {
 		.padding = 5,
-		.font_size = 10,
+		.font_size = 5,
 		.min_width = 300,
 		.max_width = 1000,
 		.position = {
-			.x = 100,
-			.y = 10
+			.x = 10,
+			.y = 100
 		},
 		.border_color = 0x000000,
 
