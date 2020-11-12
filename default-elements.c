@@ -183,6 +183,7 @@ static void RDUIFieldEventReceiver(struct RDUINode* node, enum RDUIEvent event, 
 
 		if(key_event->bDown == 1 && focused_field == field_data) {
 			if(key_event->keycode >= 32 && key_event->keycode < 127) {
+				if(key_event->keycode > 96 && key_event->keycode < 123 && shift_down) key_event->keycode -= 32;
 				field_data->value = UtilStringInsertOne(field_data->value, field_data->cursor, key_event->keycode);
 				field_data->cursor++;
 			} else {
