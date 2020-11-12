@@ -122,6 +122,13 @@ static void PutCursorInValidState(struct RDUIFieldData* field) {
 	if(field->cursor > length) field->cursor = length;
 }
 
+#define KEY_SHIFT 65505
+#define KEY_BACKSPACE 65288
+#define KEY_DELETE 65535
+#define KEY_LEFT_ARROW 65361
+#define KEY_RIGHT_ARROW 65363
+#define KEY_ESCAPE 65307
+
 static void RDUIFieldEventReceiver(struct RDUINode* node, enum RDUIEvent event, void* data) {
 	struct RDUIFieldData* field_data = node->data;
 
@@ -177,7 +184,7 @@ static void RDUIFieldEventReceiver(struct RDUINode* node, enum RDUIEvent event, 
 	}
 
 	RDUIIfEventIs(key) {
-		if(key_event->keycode == 65505) shift_down = key_event->bDown;
+		if(key_event->keycode == KEY_SHIFT) shift_down = key_event->bDown;
 
 		if(key_event->bDown == 1 && focused_field == field_data) {
 			if(key_event->keycode >= 32 && key_event->keycode < 127) {
@@ -185,19 +192,19 @@ static void RDUIFieldEventReceiver(struct RDUINode* node, enum RDUIEvent event, 
 				field_data->value = UtilStringInsertOne(field_data->value, field_data->cursor, key_event->keycode);
 				field_data->cursor++;
 			} else {
-				if(key_event->keycode == 65288) {
+				if(key_event->keycode == KEY_BACKSPACE) {
 					field_data->value = UtilStringRemoveOne(field_data->value, field_data->cursor);
 					field_data->cursor--;
 				}
 
-				if(key_event->keycode == 65535) {
+				if(key_event->keycode == KEY_DELETE) {
 					field_data->value = UtilStringRemoveOne(field_data->value, field_data->cursor + 1);
 					PutCursorInValidState(field_data);
 				}
 
-				if(key_event->keycode == 65361) if(field_data->cursor > 0) field_data->cursor--;
-				if(key_event->keycode == 65363) if(field_data->cursor < strlen(field_data->value)) field_data->cursor++;
-				if(key_event->keycode == 65307) focused_field = NULL;
+				if(key_event->keycode == KEY_LEFT_ARROW) if(field_data->cursor > 0) field_data->cursor--;
+				if(key_event->keycode == KEY_RIGHT_ARROW) if(field_data->cursor < strlen(field_data->value)) field_data->cursor++;
+				if(key_event->keycode == KEY_ESCAPE) focused_field = NULL;
 			}
 		}
 	}
