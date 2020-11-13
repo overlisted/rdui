@@ -1,9 +1,13 @@
 #include "RDUI.h"
 
-struct RDUINode* RDUIRootNode = NULL;
+static struct {
+	struct RDUINode** array;
+	size_t count;
+} Nodes;
 
 void RDUIInit() {
-	RDUIRootNode = RDUINewNode(NULL, RDUINoOpEventReceiver);
+	Nodes.array = malloc(0);
+	Nodes.count = 0;
 }
 
 struct RDUINode* RDUINewNode(
@@ -12,37 +16,27 @@ struct RDUINode* RDUINewNode(
 ) {
 	struct RDUINode* node = malloc(sizeof(struct RDUINode));
 
-	node->parent = NULL;
 	node->data = data;
 	node->event_receiver_function = event_receiver_function;
-
-	node->children = malloc(0);
-	node->children_count = 0;
 
 	return node;
 }
 
-void RDUIPushChild(struct RDUINode* node, struct RDUINode* child) {
-	node->children_count++;
+void RDUIPushNode(struct RDUINode* node) {
+	Nodes.count++;
 
-	node->children = realloc(node->children, node->children_count * sizeof(void*));
-	if(node->children != NULL) {
-    node->children[node->children_count - 1] = child;
-		child->parent = node;
+	Nodes.array = realloc(Nodes.array, Nodes.count * sizeof(struct RDUINode*));
+	if(Nodes.array != NULL) {
+    Nodes.array[Nodes.count - 1] = node;
   } else {
-    node->children_count--;
+    Nodes.count--;
   }
 }
 
-#define ForEachChild(node) for(size_t i = 0; i < node->children_count; i++)
-
-static void RDUIDispatchHierarchyEvent(struct RDUINode* node, enum RDUIEvent event, void* data) {
-	node->event_receiver_function(node, event, data);
-	ForEachChild(node) RDUIDispatchHierarchyEvent(node->children[i], event, data);
-}
+#define ForEachNode() for(size_t i = 0; i < Nodes.count; i++)
 
 void RDUIDispatchEvent(enum RDUIEvent event, void* data) {
-	RDUIDispatchHierarchyEvent(RDUIRootNode, event, data);
+	ForEachNode() Nodes.array[i]->event_receiver_function(Nodes.array[i], event, data);
 }
 
 void RDUINoOpEventReceiver(struct RDUINode* node, enum RDUIEvent event, void* data) {}
