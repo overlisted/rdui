@@ -99,9 +99,9 @@ int main(int argv, char* argc[]) {
 	struct RDUINode* checkbox = RDUINewCheckbox(&checkbox_data);
 	struct RDUINode* field = RDUINewField(&field_data);
 
-	RDUIPushChild(RDUIRootNode, button);
-	RDUIPushChild(RDUIRootNode, checkbox);
-	RDUIPushChild(RDUIRootNode, field);
+	RDUIPushNode(button);
+	RDUIPushNode(checkbox);
+	RDUIPushNode(field);
 
 	while(1) {
 		CNFGHandleInput();
