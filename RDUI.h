@@ -34,11 +34,6 @@ struct RDUIEventData_motion {
 typedef void (*RDUIEventReceiverFunction)(struct RDUINode* node, enum RDUIEvent event, void* data);
 
 struct RDUINode {
-	struct RDUINode* parent;
-
-	struct RDUINode** children;
-	size_t children_count;
-
 	void* data;
 
   RDUIEventReceiverFunction event_receiver_function;
@@ -48,8 +43,6 @@ struct RDUINode {
   struct RDUIEventData_##if_name* if_name##_event = data; \
   if(event == RDUIEvent_##if_name)
 
-extern struct RDUINode* RDUIRootNode;
-
 void RDUIInit();
 
 struct RDUINode* RDUINewNode(
@@ -57,7 +50,7 @@ struct RDUINode* RDUINewNode(
 	RDUIEventReceiverFunction event_receiver_function
 );
 
-void RDUIPushChild(struct RDUINode* node, struct RDUINode* child);
+void RDUIPushNode(struct RDUINode* node);
 
 void RDUIDispatchEvent(enum RDUIEvent event, void* data);
 void RDUINoOpEventReceiver(struct RDUINode* node, enum RDUIEvent event, void* data);
