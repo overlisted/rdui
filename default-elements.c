@@ -179,6 +179,7 @@ static void RDUIFieldEventReceiver(struct RDUINode* node, enum RDUIEvent event, 
 			char* buf = UtilCopyString(field_data->value);
 
 			CNFGGetTextExtents(UtilStringCutAfter(buf, field_data->cursor), &cursor_drawing_x, &whatever, field_data->font_size);
+			if(cursor_drawing_x < 0) cursor_drawing_x = 0;
 
       CNFGColor(0);
 			CNFGTackSegment(
