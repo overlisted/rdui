@@ -5,7 +5,7 @@
 
 static char ProcessClick(
 	struct RDUIEventData_button* event,
-	struct RDUIPosition	element_position,
+	RDPoint	element_position,
 	int element_width,
 	int element_height,
 	char* element_is_held
@@ -155,7 +155,7 @@ static void RDUIFieldEventReceiver(struct RDUINode* node, enum RDUIEvent event, 
 	int text_width, text_height;
 	CNFGGetTextExtents(field_data->value, &text_width, &text_height, field_data->font_size);
 
-	struct RDUIPosition pos2 = {
+	RDPoint pos2 = {
 		.x = field_data->position.x + UtilMax(text_width + field_data->padding * 2, field_data->min_width),
 		.y = field_data->position.y + text_height + field_data->padding * 2
 	};
