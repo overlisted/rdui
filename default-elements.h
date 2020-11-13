@@ -8,7 +8,7 @@ struct RDUIButtonData {
 	int padding;
 	int color;
 	int text_color;
-	struct RDUIPosition position;
+	RDPoint position;
 	char is_held;
 
 	void (*clicked_handler)(struct RDUIButtonData* data);
@@ -22,7 +22,7 @@ struct RDUICheckboxData {
 	int padding;
 	int color;
 	int checkmark_color;
-	struct RDUIPosition position;
+	RDPoint position;
 	char is_held;
 
 	void (*activate_handler)(struct RDUICheckboxData* data);
@@ -36,7 +36,7 @@ struct RDUIFieldData {
 	int font_size;
 	int min_width;
 	int max_width;
-	struct RDUIPosition position;
+	RDPoint position;
 	int border_color;
 	char* value;
 	size_t cursor;

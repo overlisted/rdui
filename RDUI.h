@@ -6,12 +6,7 @@
 
 struct RDUINode;
 
-struct RDUIPosition {
-	int x;
-	int y;
-};
-
-static struct RDUIPosition RDUIPositionOrigin = {.x = 0, .y = 0};
+static RDPoint RDUIPositionOrigin = {.x = 0, .y = 0};
 
 enum RDUIEvent {
 	RDUIEvent_render,
@@ -26,13 +21,13 @@ struct RDUIEventData_key {
 };
 
 struct RDUIEventData_button {
-	struct RDUIPosition position;
+	RDPoint position;
 	int button;
 	int bDown;
 };
 
 struct RDUIEventData_motion {
-	struct RDUIPosition position;
+	RDPoint position;
 	int mask;
 };
 
