@@ -240,7 +240,7 @@ struct RDUINode* RDUINewField(struct RDUIFieldData* data) {
 	return RDUINewNode(data, RDUIFieldEventReceiver);
 }
 
-static void RDUIOPtionsBoxEventReceiver(struct RDUINode* node, enum RDUIEvent event, void* data) {
+static void RDUIOptionsBoxEventReceiver(struct RDUINode* node, enum RDUIEvent event, void* data) {
 	RDUIIfEventIs(render) {
 
 	}
@@ -259,5 +259,5 @@ static void RDUIOPtionsBoxEventReceiver(struct RDUINode* node, enum RDUIEvent ev
 }
 
 struct RDUINode* RDUINewOptionsBox(struct RDUIOptionsBoxData* data) {
-	return RDUINewNode(data, RDUIOPtionsBoxEventReceiver);
+	return RDUINewNode(data, RDUIOptionsBoxEventReceiver);
 }
