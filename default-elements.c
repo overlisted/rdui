@@ -239,3 +239,25 @@ struct RDUINode* RDUINewField(struct RDUIFieldData* data) {
 
 	return RDUINewNode(data, RDUIFieldEventReceiver);
 }
+
+static void RDUIOPtionsBoxEventReceiver(struct RDUINode* node, enum RDUIEvent event, void* data) {
+	RDUIIfEventIs(render) {
+
+	}
+
+	RDUIIfEventIs(button) {
+
+	}
+
+	RDUIIfEventIs(motion) {
+
+	}
+
+	RDUIIfEventIs(key) {
+
+	}
+}
+
+struct RDUINode* RDUINewOptionsBox(struct RDUIOptionsBoxData* data) {
+	return RDUINewNode(data, RDUIOPtionsBoxEventReceiver);
+}

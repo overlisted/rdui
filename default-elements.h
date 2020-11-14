@@ -46,6 +46,13 @@ struct RDUIFieldData {
 
 struct RDUINode* RDUINewField(struct RDUIFieldData* data);
 
+struct RDUIOptionsBoxData {
+	RDPoint position;
+	char** options;
+};
+
+struct RDUINode* RDUINewOptionsBox(struct RDUIOptionsBoxData* data);
+
 #ifdef RDUI_IMPLEMENTATION
 #include "default-elements.c"
 #endif
