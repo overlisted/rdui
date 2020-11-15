@@ -53,6 +53,7 @@ struct RDUIOptionsBoxData {
 	int font_size;
 	int padding;
 	char** options; // NOTE: they have to be null terminated
+	char* held_options;
 	size_t selected_index;
 	char is_held;
 	char is_open;
