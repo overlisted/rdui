@@ -132,6 +132,13 @@ int main(int argv, char* argc[]) {
 		CNFGColor(0x444444);
 
 		RDUIDispatchEvent(RDUIEvent_render, NULL);
+		if(options_box_data.selected_index == 2) {
+			CNFGColor(0);
+			CNFGPenX = 200;
+			CNFGPenY = 150;
+
+			CNFGDrawText("why", 5);
+		}
 
 		CNFGSwapBuffers();
 	}
