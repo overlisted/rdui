@@ -40,6 +40,10 @@ void CheckboxDeactivateHandler(struct RDUICheckboxData* data) {
 
 }
 
+void OptionsBoxSelectHandler(struct RDUIOptionsBoxData* data) {
+
+}
+
 void FieldTypeHandler(struct RDUIFieldData* data) {
 	if(!strcmp(data->value, "demo")) UtilStringChange(data->value, "example");
 }
@@ -106,7 +110,9 @@ int main(int argv, char* argc[]) {
 		.font_color = 0xffffff,
 		.font_size = 5,
 		.padding = 5,
-		.options = options
+		.options = options,
+
+		.select_handler = OptionsBoxSelectHandler
 	};
 
 	struct RDUINode* button = RDUINewButton(&button_data);
