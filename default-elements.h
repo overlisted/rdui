@@ -48,7 +48,14 @@ struct RDUINode* RDUINewField(struct RDUIFieldData* data);
 
 struct RDUIOptionsBoxData {
 	RDPoint position;
-	char** options;
+	int color;
+	int font_color;
+	int font_size;
+	int padding;
+	char** options; // NOTE: they have to be null terminated
+	size_t selected_index;
+	char is_held;
+	char is_open;
 };
 
 struct RDUINode* RDUINewOptionsBox(struct RDUIOptionsBoxData* data);

@@ -240,13 +240,62 @@ struct RDUINode* RDUINewField(struct RDUIFieldData* data) {
 	return RDUINewNode(data, RDUIFieldEventReceiver);
 }
 
-static void RDUIOptionsBoxEventReceiver(struct RDUINode* node, enum RDUIEvent event, void* data) {
-	RDUIIfEventIs(render) {
+static void RenderOptions(struct RDUIOptionsBoxData* data) {
 
+}
+
+#include <stdio.h>
+
+static void RDUIOptionsBoxEventReceiver(struct RDUINode* node, enum RDUIEvent event, void* data) {
+	struct RDUIOptionsBoxData* options_box_data = node->data;
+
+	int width, height;
+	CNFGGetTextExtents(
+		options_box_data->options[options_box_data->selected_index],
+		&width,
+		&height,
+		options_box_data->font_size
+	);
+
+	width += options_box_data->padding * 2;
+	height += options_box_data->padding * 2;
+
+	RDUIIfEventIs(render) {
+		if(options_box_data->is_open) RenderOptions(options_box_data);
+
+		int drawn_color;
+		if(options_box_data->is_held) {
+			drawn_color = options_box_data->color - 0x030303;
+		} else {
+			drawn_color = options_box_data->color + 0x030303;
+		}
+
+		CNFGColor(drawn_color);
+		CNFGTackRectangle(
+			options_box_data->position.x,
+			options_box_data->position.y,
+			options_box_data->position.x + width,
+			options_box_data->position.y + height
+		);
+
+		CNFGColor(options_box_data->font_color);
+		CNFGPenX = options_box_data->position.x + options_box_data->padding;
+		CNFGPenY = options_box_data->position.y + options_box_data->padding;
+		CNFGDrawText(options_box_data->options[options_box_data->selected_index], options_box_data->font_size);
 	}
 
 	RDUIIfEventIs(button) {
+		if(options_box_data->is_open) {
 
+		}
+
+		if(ProcessClick(button_event, options_box_data->position, width, height, &options_box_data->is_held)) {
+			if(options_box_data->is_open) {
+				options_box_data->is_open = 0;
+			} else {
+				options_box_data->is_open = 1;
+			}
+		}
 	}
 
 	RDUIIfEventIs(motion) {
@@ -254,10 +303,16 @@ static void RDUIOptionsBoxEventReceiver(struct RDUINode* node, enum RDUIEvent ev
 	}
 
 	RDUIIfEventIs(key) {
+		if(options_box_data->is_open) {
 
+		}
 	}
 }
 
 struct RDUINode* RDUINewOptionsBox(struct RDUIOptionsBoxData* data) {
+	data->selected_index = 0;
+	data->is_held = 0;
+	data->is_open = 0;
+
 	return RDUINewNode(data, RDUIOptionsBoxEventReceiver);
 }
