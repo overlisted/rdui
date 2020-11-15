@@ -309,7 +309,18 @@ static void RDUIOptionsBoxEventReceiver(struct RDUINode* node, enum RDUIEvent ev
 
 	RDUIIfEventIs(button) {
 		if(options_box_data->is_open) {
+			for(size_t i = 0; options_box_data->options[i] != NULL; i++) {
+				RDPoint position = {
+					.x = options_box_data->position.x,
+					.y = options_box_data->position.y + ((i - options_box_data->selected_index) * height)
+				};
 
+				if(ProcessClick(button_event, position, width, height, &options_box_data->held_options[i])) {
+					options_box_data->is_open = 0;
+					options_box_data->selected_index = i;
+					return;
+				}
+			}
 		}
 
 		if(ProcessClick(button_event, options_box_data->position, width, height, &options_box_data->is_held)) {
