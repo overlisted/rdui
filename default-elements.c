@@ -341,7 +341,7 @@ static void RDUIOptionsBoxEventReceiver(struct RDUINode* node, enum RDUIEvent ev
 }
 
 struct RDUINode* RDUINewOptionsBox(struct RDUIOptionsBoxData* data) {
-	size_t options_count;
+	size_t options_count = 0;
 	while(data->options[options_count] != NULL) options_count++;
 
 	data->held_options = calloc(options_count, 1);
