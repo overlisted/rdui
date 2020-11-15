@@ -332,10 +332,6 @@ static void RDUIOptionsBoxEventReceiver(struct RDUINode* node, enum RDUIEvent ev
 		}
 	}
 
-	RDUIIfEventIs(motion) {
-
-	}
-
 	RDUIIfEventIs(key) {
 		if(options_box_data->is_open) {
 
