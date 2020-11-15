@@ -245,7 +245,14 @@ static void RenderOptions(struct RDUIOptionsBoxData* data, int option_width, int
 		int x = data->position.x;
 		int y = data->position.y + ((i - data->selected_index) * option_height);
 
-		CNFGColor(data->color - 0x050505);
+		int drawn_color;
+		if(data->held_options[i]) {
+			drawn_color = data->color - 0x050505 - 0x030303;
+		} else {
+			drawn_color = data->color - 0x050505 + 0x030303;
+		}
+
+		CNFGColor(drawn_color);
 		CNFGTackRectangle(x, y, x + option_width, y + option_height);
 
 		CNFGColor(data->font_color);
@@ -326,6 +333,10 @@ static void RDUIOptionsBoxEventReceiver(struct RDUINode* node, enum RDUIEvent ev
 }
 
 struct RDUINode* RDUINewOptionsBox(struct RDUIOptionsBoxData* data) {
+	size_t options_count;
+	while(data->options[options_count] != NULL) options_count++;
+
+	data->held_options = calloc(options_count, 1);
 	data->selected_index = 0;
 	data->is_held = 0;
 	data->is_open = 0;
