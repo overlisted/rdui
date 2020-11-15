@@ -240,28 +240,44 @@ struct RDUINode* RDUINewField(struct RDUIFieldData* data) {
 	return RDUINewNode(data, RDUIFieldEventReceiver);
 }
 
-static void RenderOptions(struct RDUIOptionsBoxData* data) {
+static void RenderOptions(struct RDUIOptionsBoxData* data, int option_width, int option_height) {
+	for(size_t i = 0; data->options[i] != NULL; i++) {
+		int x = data->position.x;
+		int y = data->position.y + ((i - data->selected_index) * option_height);
 
+		CNFGColor(data->color - 0x050505);
+		CNFGTackRectangle(x, y, x + option_width, y + option_height);
+
+		CNFGColor(data->font_color);
+		CNFGPenX = x + data->padding;
+		CNFGPenY = y + data->padding;
+		CNFGDrawText(data->options[i], data->font_size);
+	}
 }
-
-#include <stdio.h>
 
 static void RDUIOptionsBoxEventReceiver(struct RDUINode* node, enum RDUIEvent event, void* data) {
 	struct RDUIOptionsBoxData* options_box_data = node->data;
 
-	int width, height;
-	CNFGGetTextExtents(
-		options_box_data->options[options_box_data->selected_index],
-		&width,
-		&height,
-		options_box_data->font_size
-	);
+	int width = 0, height = 0;
+	for(size_t i = 0; options_box_data->options[i] != NULL; i++) {
+		int _width, _height;
+
+		CNFGGetTextExtents(
+			options_box_data->options[i],
+			&_width,
+			&_height,
+			options_box_data->font_size
+		);
+
+		width = UtilMax(width, _width);
+		height = UtilMax(height, _height);
+	}
 
 	width += options_box_data->padding * 2;
 	height += options_box_data->padding * 2;
 
 	RDUIIfEventIs(render) {
-		if(options_box_data->is_open) RenderOptions(options_box_data);
+		if(options_box_data->is_open) RenderOptions(options_box_data, width, height);
 
 		int drawn_color;
 		if(options_box_data->is_held) {
