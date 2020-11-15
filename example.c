@@ -95,13 +95,29 @@ int main(int argv, char* argc[]) {
 		.type_handler = FieldTypeHandler
 	};
 
+	char* options[] = {"Pepsi", "Coca Cola", "Fanta", "Tea", "Orange juice", NULL};
+
+	struct RDUIOptionsBoxData options_box_data = {
+		.position = {
+			.x = 10,
+			.y = 150
+		},
+		.color = 0x555555,
+		.font_color = 0xffffff,
+		.font_size = 5,
+		.padding = 5,
+		.options = options
+	};
+
 	struct RDUINode* button = RDUINewButton(&button_data);
 	struct RDUINode* checkbox = RDUINewCheckbox(&checkbox_data);
 	struct RDUINode* field = RDUINewField(&field_data);
+	struct RDUINode* options_box = RDUINewOptionsBox(&options_box_data);
 
 	RDUIPushNode(button);
 	RDUIPushNode(checkbox);
 	RDUIPushNode(field);
+	RDUIPushNode(options_box);
 
 	while(1) {
 		CNFGHandleInput();
