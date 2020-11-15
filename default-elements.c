@@ -213,7 +213,7 @@ static void RDUIFieldEventReceiver(struct RDUINode* node, enum RDUIEvent event, 
 				field_data->value = UtilStringInsertOne(field_data->value, field_data->cursor, key_event->keycode);
 				field_data->cursor++;
 			} else {
-				if(key_event->keycode == KEY_BACKSPACE) {
+				if(key_event->keycode == KEY_BACKSPACE && field_data->cursor > 0) {
 					field_data->value = UtilStringRemoveOne(field_data->value, field_data->cursor);
 					field_data->cursor--;
 				}
