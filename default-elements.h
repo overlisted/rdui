@@ -57,6 +57,8 @@ struct RDUIOptionsBoxData {
 	size_t selected_index;
 	char is_held;
 	char is_open;
+
+	void (*select_handler)(struct RDUIOptionsBoxData* data);
 };
 
 struct RDUINode* RDUINewOptionsBox(struct RDUIOptionsBoxData* data);

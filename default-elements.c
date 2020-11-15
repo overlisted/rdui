@@ -318,6 +318,7 @@ static void RDUIOptionsBoxEventReceiver(struct RDUINode* node, enum RDUIEvent ev
 				if(ProcessClick(button_event, position, width, height, &options_box_data->held_options[i])) {
 					options_box_data->is_open = 0;
 					options_box_data->selected_index = i;
+					options_box_data->select_handler(options_box_data);
 					return;
 				}
 			}
