@@ -58,10 +58,10 @@ int main(int argv, char* argc[]) {
 
 	struct RDUIButtonData button_data = {
 		.text = "Click on me!",
-		.text_size = 6,
+		.font_size = 6,
 		.padding = 5,
 		.color = 0x555555,
-		.text_color = 0xffffff,
+		.font_color = 0xffffff,
 		.position = {
 			.x = 70,
 			.y = 10
