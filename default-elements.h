@@ -4,10 +4,10 @@
 
 struct RDUIButtonData {
 	char* text;
-	int text_size;
+	int font_size;
 	int padding;
 	int color;
-	int text_color;
+	int font_color;
 	RDPoint position;
 	char is_held;
 

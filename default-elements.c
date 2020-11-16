@@ -33,7 +33,7 @@ static void RDUIButtonEventReceiver(struct RDUINode* node, enum RDUIEvent event,
 
 	RDUIIfEventIs(render) {
 		int button_width, button_height;
-		CNFGGetTextExtents(button_data->text, &button_width, &button_height, button_data->text_size);
+		CNFGGetTextExtents(button_data->text, &button_width, &button_height, button_data->font_size);
 
 		button_width += button_data->padding * 2;
 		button_height += button_data->padding * 2;
@@ -53,15 +53,15 @@ static void RDUIButtonEventReceiver(struct RDUINode* node, enum RDUIEvent event,
 			button_data->position.y + button_height
 		);
 
-		CNFGColor(button_data->text_color);
+		CNFGColor(button_data->font_color);
 		CNFGPenX = button_data->position.x + button_data->padding;
 		CNFGPenY = button_data->position.y + button_data->padding;
-		CNFGDrawText(button_data->text, button_data->text_size);
+		CNFGDrawText(button_data->text, button_data->font_size);
 	}
 
 	RDUIIfEventIs(button) {
 		int button_width, button_height;
-		CNFGGetTextExtents(button_data->text, &button_width, &button_height, button_data->text_size);
+		CNFGGetTextExtents(button_data->text, &button_width, &button_height, button_data->font_size);
 
 		button_width += button_data->padding * 2;
 		button_height += button_data->padding * 2;
