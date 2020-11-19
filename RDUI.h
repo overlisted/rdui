@@ -31,6 +31,8 @@ struct RDUIEventData_motion {
 	int mask;
 };
 
+extern RDPoint RDUIMousePosition;
+
 typedef void (*RDUIEventReceiverFunction)(struct RDUINode* node, enum RDUIEvent event, void* data);
 
 struct RDUINode {
