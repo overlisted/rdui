@@ -1,5 +1,7 @@
 #include "RDUI.h"
 
+RDPoint RDUIMousePosition = {.x = 0, .y = 0};
+
 static struct {
 	struct RDUINode** array;
 	size_t count;
@@ -53,5 +55,9 @@ void RDUIHandleButtonImpl(int x, int y, int button, int bDown) {
 
 void RDUIHandleMotionImpl(int x, int y, int mask) {
 	struct RDUIEventData_motion event = {.position = {.x = x, .y = y}, .mask = mask};
+
+	RDUIMousePosition.x = x;
+	RDUIMousePosition.y = y;
+
 	RDUIDispatchEvent(RDUIEvent_motion, &event);
 }
