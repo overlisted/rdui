@@ -240,6 +240,8 @@ struct RDUINode* RDUINewField(struct RDUIFieldData* data) {
 	return RDUINewNode(data, RDUIFieldEventReceiver);
 }
 
+#include <stdio.h>
+
 static void RenderOptions(struct RDUIOptionsBoxData* data, int option_width, int option_height) {
 	for(size_t i = 0; data->options[i] != NULL; i++) {
 		int x = data->position.x;
@@ -250,6 +252,15 @@ static void RenderOptions(struct RDUIOptionsBoxData* data, int option_width, int
 			drawn_color = data->color - 0x050505 - 0x030303;
 		} else {
 			drawn_color = data->color - 0x050505;
+		}
+
+		if(
+			RDUIMousePosition.x > x
+			 && RDUIMousePosition.y > y
+			 && RDUIMousePosition.x < x + option_width
+			 && RDUIMousePosition.y < y + option_height
+		) {
+			drawn_color -= 0x020202;
 		}
 
 		CNFGColor(drawn_color);
