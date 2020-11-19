@@ -42,7 +42,7 @@ static void RDUIButtonEventReceiver(struct RDUINode* node, enum RDUIEvent event,
 		if(button_data->is_held) {
 			drawn_color = button_data->color - 0x030303;
 		} else {
-			drawn_color = button_data->color + 0x030303;
+			drawn_color = button_data->color;
 		}
 
 		CNFGColor(drawn_color);
@@ -86,7 +86,7 @@ static void RDUICheckboxEventReceiver(struct RDUINode* node, enum RDUIEvent even
 		if(checkbox_data->is_held) {
 			drawn_color = checkbox_data->color - 0x030303;
 		} else {
-			drawn_color = checkbox_data->color + 0x030303;
+			drawn_color = checkbox_data->color;
 		}
 
 		CNFGColor(drawn_color);
@@ -249,7 +249,7 @@ static void RenderOptions(struct RDUIOptionsBoxData* data, int option_width, int
 		if(data->held_options[i]) {
 			drawn_color = data->color - 0x050505 - 0x030303;
 		} else {
-			drawn_color = data->color - 0x050505 + 0x030303;
+			drawn_color = data->color - 0x050505;
 		}
 
 		CNFGColor(drawn_color);
@@ -290,7 +290,7 @@ static void RDUIOptionsBoxEventReceiver(struct RDUINode* node, enum RDUIEvent ev
 		if(options_box_data->is_held) {
 			drawn_color = options_box_data->color - 0x030303;
 		} else {
-			drawn_color = options_box_data->color + 0x030303;
+			drawn_color = options_box_data->color;
 		}
 
 		CNFGColor(drawn_color);
