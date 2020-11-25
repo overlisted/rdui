@@ -6,8 +6,6 @@
 
 struct RDUINode;
 
-static RDPoint RDUIPositionOrigin = {.x = 0, .y = 0};
-
 enum RDUIEvent {
 	RDUIEvent_render,
 	RDUIEvent_key,
