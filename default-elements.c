@@ -1,3 +1,5 @@
+#pragma GCC diagnostic ignored "-Wunused-variable"
+
 #include "default-elements.h"
 #include "util.h"
 
