@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -O1 -g
+CFLAGS = -O1 -g -Wall
 LDFLAGS = -lX11 -lm -lpthread
 
 example: example.c
