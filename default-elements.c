@@ -3,6 +3,9 @@
 #include "default-elements.h"
 #include "util.h"
 
+#define ONLYINPUT_IMPLEMENTATION
+#include <onlyinput/onlyinput.h>
+
 #include <string.h>
 
 static char ProcessClick(
@@ -199,9 +202,9 @@ static void RDUIFieldEventReceiver(struct RDUINode* node, enum RDUIEvent event, 
 		if(key_event->keycode == CNFG_KEY_SHIFT) shift_down = key_event->bDown;
 
 		if(key_event->bDown == 1 && focused_field == field_data) {
-			if(key_event->keycode >= 32 && key_event->keycode < 127) {
-				if(key_event->keycode > 96 && key_event->keycode < 123 && shift_down) key_event->keycode -= 32;
-				field_data->value = UtilStringInsertOne(field_data->value, field_data->cursor, key_event->keycode);
+			char character = OIReadAscii();
+			if(character != 0) {
+				field_data->value = UtilStringInsertOne(field_data->value, field_data->cursor, character);
 				field_data->cursor++;
 			} else {
 				if(key_event->keycode == CNFG_KEY_BACKSPACE && field_data->cursor > 0) {
