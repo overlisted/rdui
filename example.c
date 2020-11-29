@@ -100,6 +100,7 @@ int main(int argv, char* argc[]) {
 			.x = 10,
 			.y = 100
 		},
+		.font_color = 0x000000ff,
 		.border_color = 0x000000ff,
 
 		.type_handler = FieldTypeHandler
