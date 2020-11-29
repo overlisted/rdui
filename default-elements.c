@@ -164,6 +164,7 @@ static void RDUIFieldEventReceiver(struct RDUINode* node, enum RDUIEvent event, 
 			pos2.y
 		);
 
+		CNFGColor(field_data->font_color);
 		CNFGPenX = field_data->position.x + field_data->padding;
 		CNFGPenY = field_data->position.y + field_data->padding;
 		CNFGDrawText(field_data->value, field_data->font_size);
@@ -175,7 +176,7 @@ static void RDUIFieldEventReceiver(struct RDUINode* node, enum RDUIEvent event, 
 			CNFGGetTextExtents(UtilStringCutAfter(buf, field_data->cursor), &cursor_drawing_x, &whatever, field_data->font_size);
 			if(cursor_drawing_x < 0) cursor_drawing_x = 0;
 
-      CNFGColor(0);
+      CNFGColor(field_data->font_color);
 			CNFGTackSegment(
 				field_data->position.x + field_data->padding + cursor_drawing_x,
 				field_data->position.y + field_data->padding,
