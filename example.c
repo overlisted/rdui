@@ -58,7 +58,7 @@ int main(int argv, char* argc[]) {
 	RDUIInit();
 
 	int i;
-	CNFGBGColor = 0xffffff;
+	CNFGBGColor = 0xffffffff;
 
 	CNFGSetup("RDUI Example", 800, 600);
 
@@ -66,8 +66,8 @@ int main(int argv, char* argc[]) {
 		.text = "Click on me!",
 		.font_size = 6,
 		.padding = 5,
-		.color = 0x555555,
-		.font_color = 0xffffff,
+		.color = 0x555555ff,
+		.font_color = 0xffffffff,
 		.position = {
 			.x = 70,
 			.y = 10
@@ -80,8 +80,8 @@ int main(int argv, char* argc[]) {
 		.active = 0,
 		.size = 50,
 		.padding = 5,
-		.color = 0x232323,
-		.checkmark_color = 0xffffff,
+		.color = 0x232323ff,
+		.checkmark_color = 0xffffffff,
 		.position = {
 			.x = 10,
 			.y = 10
@@ -100,7 +100,7 @@ int main(int argv, char* argc[]) {
 			.x = 10,
 			.y = 100
 		},
-		.border_color = 0x000000,
+		.border_color = 0x000000ff,
 
 		.type_handler = FieldTypeHandler
 	};
@@ -112,8 +112,8 @@ int main(int argv, char* argc[]) {
 			.x = 10,
 			.y = 150
 		},
-		.color = 0x555555,
-		.font_color = 0xffffff,
+		.color = 0x555555ff,
+		.font_color = 0xffffffff,
 		.font_size = 5,
 		.padding = 5,
 		.options = options,
@@ -135,7 +135,7 @@ int main(int argv, char* argc[]) {
 		CNFGHandleInput();
 		CNFGClearFrame();
 
-		CNFGColor(0x444444);
+		CNFGColor(0x444444ff);
 
 		RDUIDispatchEvent(RDUIEvent_render, NULL);
 		if(options_box_data.selected_index == 2) {
