@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -O1 -g -Wall
+CFLAGS = -I. -O1 -g -Wall
 LDFLAGS = -lX11 -lm -lpthread
 
 MINGW32?=i686-w64-mingw32-

@@ -9,8 +9,14 @@
 #include <stdio.h>
 #include <string.h>
 
+#define ONLYINPUT_IMPLEMENTATION
+#include <onlyinput/onlyinput.h>
+
 void HandleKey(int keycode, int bDown) {
+	OIHandleKey(keycode, bDown);
 	RDUIHandleKeyImpl(keycode, bDown);
+
+	printf("key %d\n", keycode);
 }
 
 void HandleButton(int x, int y, int button, int bDown) {
