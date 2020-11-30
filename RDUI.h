@@ -50,16 +50,23 @@ struct RDUINode* RDUINewNode(
 	RDUIEventReceiverFunction event_receiver_function
 );
 
-void RDUIPushNode(struct RDUINode* node);
-
-void RDUIDispatchEvent(enum RDUIEvent event, void* data);
 void RDUINoOpEventReceiver(struct RDUINode* node, enum RDUIEvent event, void* data);
 
 // Handlers for rawdraw events
 
-void RDUIHandleKeyImpl(int keycode, int bDown);
-void RDUIHandleButtonImpl(int x, int y, int button, int bDown);
-void RDUIHandleMotionImpl(int x, int y, int mask);
+struct RDUIMenu {
+	size_t size;
+	struct RDUINode** nodes;
+};
+
+void RDUIDispatchEvent(struct RDUIMenu* menu, enum RDUIEvent event, void* data);
+
+void RDUIHandleKeyImpl(struct RDUIMenu* menu, int keycode, int bDown);
+void RDUIHandleButtonImpl(struct RDUIMenu* menu, int x, int y, int button, int bDown);
+void RDUIHandleMotionImpl(struct RDUIMenu* menu, int x, int y, int mask);
+
+struct RDUIMenu* RDUINewMenu(size_t size, ...);
+void RDUIMenuPush(struct RDUIMenu* menu, struct RDUINode* node);
 
 #ifdef RDUI_IMPLEMENTATION
 #include "rdui.c"
