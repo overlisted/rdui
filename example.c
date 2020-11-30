@@ -12,19 +12,21 @@
 #define ONLYINPUT_IMPLEMENTATION
 #include <onlyinput/onlyinput.h>
 
+static struct RDUIMenu* menu;
+
 void HandleKey(int keycode, int bDown) {
 	OIHandleKey(keycode, bDown);
-	RDUIHandleKeyImpl(keycode, bDown);
+	RDUIHandleKeyImpl(menu, keycode, bDown);
 
 	printf("key %d\n", keycode);
 }
 
 void HandleButton(int x, int y, int button, int bDown) {
-	RDUIHandleButtonImpl(x, y, button, bDown);
+	RDUIHandleButtonImpl(menu, x, y, button, bDown);
 }
 
 void HandleMotion(int x, int y, int mask) {
-	RDUIHandleMotionImpl(x, y, mask);
+	RDUIHandleMotionImpl(menu, x, y, mask);
 }
 
 void HandleDestroy() {}
@@ -127,10 +129,7 @@ int main(int argv, char* argc[]) {
 	struct RDUINode* field = RDUINewField(&field_data);
 	struct RDUINode* options_box = RDUINewOptionsBox(&options_box_data);
 
-	RDUIPushNode(button);
-	RDUIPushNode(checkbox);
-	RDUIPushNode(field);
-	RDUIPushNode(options_box);
+	menu = RDUINewMenu(4, button, checkbox, field, options_box);
 
 	while(1) {
 		CNFGHandleInput();
@@ -138,7 +137,7 @@ int main(int argv, char* argc[]) {
 
 		CNFGColor(0x444444ff);
 
-		RDUIDispatchEvent(RDUIEvent_render, NULL);
+		RDUIDispatchEvent(menu, RDUIEvent_render, NULL);
 		if(options_box_data.selected_index == 2) {
 			CNFGColor(0);
 			CNFGPenX = 200;
