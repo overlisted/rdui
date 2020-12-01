@@ -131,6 +131,8 @@ int main(int argv, char* argc[]) {
 
 	menu = RDUINewMenu(4, button, checkbox, field, options_box);
 
+	RDUIFocusedField = &field_data;
+
 	while(1) {
 		CNFGHandleInput();
 		CNFGClearFrame();
