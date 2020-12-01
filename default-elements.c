@@ -135,7 +135,7 @@ struct RDUINode* RDUINewCheckbox(struct RDUICheckboxData* data) {
 	return RDUINewNode(data, RDUICheckboxEventReceiver);
 }
 
-static struct RDUIFieldData* focused_field;
+struct RDUIFieldData* RDUIFocusedField = NULL;
 static char shift_down = 0;
 
 static void PutCursorInValidState(struct RDUIFieldData* field) {
@@ -169,7 +169,7 @@ static void RDUIFieldEventReceiver(struct RDUINode* node, enum RDUIEvent event, 
 		CNFGPenY = field_data->position.y + field_data->padding;
 		CNFGDrawText(field_data->value, field_data->font_size);
 
-		if(focused_field == field_data) {
+		if(RDUIFocusedField == field_data) {
 			int cursor_drawing_x, whatever;
 			char* buf = UtilCopyString(field_data->value);
 
@@ -195,14 +195,14 @@ static void RDUIFieldEventReceiver(struct RDUINode* node, enum RDUIEvent event, 
 			 && button_event->position.x < pos2.x
 			 && button_event->position.y < pos2.y
 	 	) {
-		  focused_field = field_data;
+		  RDUIFocusedField = field_data;
 		}
 	}
 
 	RDUIIfEventIs(key) {
 		if(key_event->keycode == CNFG_KEY_SHIFT) shift_down = key_event->bDown;
 
-		if(key_event->bDown == 1 && focused_field == field_data) {
+		if(key_event->bDown == 1 && RDUIFocusedField == field_data) {
 			char character = OIReadAscii();
 			if(character != 0) {
 				field_data->value = UtilStringInsertOne(field_data->value, field_data->cursor, character);
@@ -220,7 +220,7 @@ static void RDUIFieldEventReceiver(struct RDUINode* node, enum RDUIEvent event, 
 
 				if(key_event->keycode == CNFG_KEY_LEFT_ARROW) if(field_data->cursor > 0) field_data->cursor--;
 				if(key_event->keycode == CNFG_KEY_RIGHT_ARROW) if(field_data->cursor < strlen(field_data->value)) field_data->cursor++;
-				if(key_event->keycode == CNFG_KEY_ESCAPE) focused_field = NULL;
+				if(key_event->keycode == CNFG_KEY_ESCAPE) RDUIFocusedField = NULL;
 			}
 
 			field_data->type_handler(field_data);

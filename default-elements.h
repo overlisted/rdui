@@ -31,6 +31,7 @@ struct RDUICheckboxData {
 
 struct RDUINode* RDUINewCheckbox(struct RDUICheckboxData* data);
 
+extern struct RDUIFieldData* RDUIFocusedField;
 struct RDUIFieldData {
 	int padding;
 	int font_size;
