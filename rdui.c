@@ -3,6 +3,7 @@
 #include <stdarg.h>
 
 RDPoint RDUIMousePosition = {.x = 0, .y = 0};
+struct RDUIMenu* RDUIProcessedMenu = NULL;
 
 void RDUIInit() {
 	// may be removed in future
@@ -48,7 +49,11 @@ void RDUIMenuPush(struct RDUIMenu* menu, struct RDUINode* node) {
 #define ForEachNode() for(size_t i = 0; i < menu->size; i++)
 
 void RDUIDispatchEvent(struct RDUIMenu* menu, enum RDUIEvent event, void* data) {
+	RDUIProcessedMenu = menu;
+
 	ForEachNode() menu->nodes[i]->event_receiver_function(menu->nodes[i], event, data);
+
+	RDUIProcessedMenu = NULL;
 }
 
 void RDUINoOpEventReceiver(struct RDUINode* node, enum RDUIEvent event, void* data) {}
