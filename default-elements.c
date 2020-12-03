@@ -229,8 +229,13 @@ static void RDUIFieldEventReceiver(struct RDUINode* node, enum RDUIEvent event, 
 }
 
 struct RDUINode* RDUINewField(struct RDUIFieldData* data) {
-	data->cursor = 0;
-	data->value = calloc(1, 1);
+	if(!data->value || *data->value == '\0') {
+		data->value = calloc(1, 1);
+		data->cursor = 0;
+	} else {
+		data->value = UtilCopyString(data->value);
+		data->cursor = strlen(data->value) + 1;
+	}
 
 	return RDUINewNode(data, RDUIFieldEventReceiver);
 }
