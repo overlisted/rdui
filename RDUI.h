@@ -68,6 +68,8 @@ void RDUIHandleMotionImpl(struct RDUIMenu* menu, int x, int y, int mask);
 struct RDUIMenu* RDUINewMenu(size_t size, ...);
 void RDUIMenuPush(struct RDUIMenu* menu, struct RDUINode* node);
 
+extern struct RDUIMenu* RDUIProcessedMenu;
+
 #ifdef RDUI_IMPLEMENTATION
 #include "rdui.c"
 #endif
