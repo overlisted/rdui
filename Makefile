@@ -17,4 +17,4 @@ run: example
 	./example
 
 clean:
-	rm example
+	rm example example.exe
