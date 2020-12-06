@@ -240,8 +240,6 @@ struct RDUINode* RDUINewField(struct RDUIFieldData* data) {
 	return RDUINewNode(data, RDUIFieldEventReceiver);
 }
 
-#include <stdio.h>
-
 static void RenderOptions(struct RDUIOptionsBoxData* data, int option_width, int option_height) {
 	for(size_t i = 0; data->options[i] != NULL; i++) {
 		int x = data->position.x;
