@@ -136,7 +136,6 @@ struct RDUINode* RDUINewCheckbox(struct RDUICheckboxData* data) {
 }
 
 struct RDUIFieldData* RDUIFocusedField = NULL;
-static char shift_down = 0;
 
 static void PutCursorInValidState(struct RDUIFieldData* field) {
 	size_t length = strlen(field->value);
@@ -200,8 +199,6 @@ static void RDUIFieldEventReceiver(struct RDUINode* node, enum RDUIEvent event, 
 	}
 
 	RDUIIfEventIs(key) {
-		if(key_event->keycode == CNFG_KEY_SHIFT) shift_down = key_event->bDown;
-
 		if(key_event->bDown == 1 && RDUIFocusedField == field_data) {
 			char character = OIReadAscii();
 			if(character != 0) {
