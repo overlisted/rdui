@@ -202,7 +202,7 @@ static void RDUIFieldEventReceiver(struct RDUINode* node, enum RDUIEvent event, 
 		if(key_event->bDown == 1 && RDUIFocusedField == field_data) {
 			char character = OIReadAscii();
 			if(character != 0) {
-				field_data->value = UtilStringInsertOne(field_data->value, field_data->cursor - 1, character);
+				field_data->value = UtilStringInsertOne(field_data->value, field_data->cursor, character);
 				field_data->cursor++;
 			} else {
 				if(key_event->keycode == CNFG_KEY_BACKSPACE && field_data->cursor > 0) {
@@ -231,7 +231,7 @@ struct RDUINode* RDUINewField(struct RDUIFieldData* data) {
 		data->cursor = 0;
 	} else {
 		data->value = UtilCopyString(data->value);
-		data->cursor = strlen(data->value) + 1;
+		data->cursor = strlen(data->value);
 	}
 
 	return RDUINewNode(data, RDUIFieldEventReceiver);
