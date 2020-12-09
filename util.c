@@ -105,6 +105,14 @@ char* UtilStringChange(char* original, const char* data) {
 	return original;
 }
 
+int UtilStringContains(char* string, char c) {
+	size_t length = strlen(string);
+
+	for(size_t i = 0; i < length; i++) if(string[i] == c) return 1;
+
+	return 0;
+}
+
 void UtilDrawRectangleBorders(int width, int x1, int y1, int x2, int y2) {
 	CNFGSetLineWidth(width);
 	CNFGTackSegment(x1, y1, x2, y1);

@@ -103,6 +103,7 @@ int main(int argv, char* argc[]) {
 		.font_color = 0x000000ff,
 		.border_color = 0x000000ff,
 		.value = "A text field",
+		.allowed_symbols = NULL,
 
 		.type_handler = FieldTypeHandler
 	};

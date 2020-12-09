@@ -41,6 +41,7 @@ struct RDUIFieldData {
 	RDPoint position;
 	int border_color;
 	char* value;
+	char* allowed_symbols; // NOTE: can be left NULL
 	size_t cursor;
 
 	void (*type_handler)(struct RDUIFieldData* data);

@@ -202,6 +202,7 @@ static void RDUIFieldEventReceiver(struct RDUINode* node, enum RDUIEvent event, 
 		if(key_event->bDown == 1 && RDUIFocusedField == field_data) {
 			char character = OIReadAscii();
 			if(character != 0) {
+				if(field_data->allowed_symbols && !UtilStringContains(field_data->allowed_symbols, character)) return;
 				field_data->value = UtilStringInsertOne(field_data->value, field_data->cursor, character);
 				field_data->cursor++;
 			} else {
