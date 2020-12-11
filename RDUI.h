@@ -52,15 +52,16 @@ struct RDUINode* RDUINewNode(
 
 void RDUINoOpEventReceiver(struct RDUINode* node, enum RDUIEvent event, void* data);
 
-// Handlers for rawdraw events
 
 struct RDUIMenu {
 	size_t size;
 	struct RDUINode** nodes;
 };
 
-void RDUIDispatchEvent(struct RDUIMenu* menu, enum RDUIEvent event, void* data);
 
+void RDUIDispatchEvent(struct RDUIMenu* menu, enum RDUIEvent event, void* data); // Call this with RDUIEvent_render in your renderloop
+
+// Handlers for rawdraw events
 void RDUIHandleKeyImpl(struct RDUIMenu* menu, int keycode, int bDown);
 void RDUIHandleButtonImpl(struct RDUIMenu* menu, int x, int y, int button, int bDown);
 void RDUIHandleMotionImpl(struct RDUIMenu* menu, int x, int y, int mask);
