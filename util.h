@@ -20,6 +20,7 @@ int UtilStringContains(char* string, char c);
 void UtilDrawRectangleBorders(int width, int x1, int y1, int x2, int y2);
 
 int UtilMax(int a, int b);
+int UtilMin(int a, int b);
 
 #ifdef RDUI_IMPLEMENTATION
 #include "util.c"

@@ -149,7 +149,7 @@ static void RDUIFieldEventReceiver(struct RDUINode* node, enum RDUIEvent event, 
 	CNFGGetTextExtents(field_data->value, &text_width, &text_height, field_data->font_size);
 
 	RDPoint pos2 = {
-		.x = field_data->position.x + UtilMax(text_width + field_data->padding * 2, field_data->min_width),
+		.x = field_data->position.x + UtilMin(UtilMax(text_width + field_data->padding * 2, field_data->min_width), field_data->max_width),
 		.y = field_data->position.y + text_height + field_data->padding * 2
 	};
 
