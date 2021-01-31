@@ -1,0 +1,36 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  compile-mingw:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup make
+    - run: sudo apt install make
+    - name: Setup MinGW
+      uses: egor-tensin/setup-mingw@v2
+      with:
+        platform: x86
+    - name: Compile PE example
+      run: make example.exe
+
+  compile-gnu:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup make
+    - run: sudo apt install make
+    - name: Setup GCC
+      uses: egor-tensin/setup-gcc@v1
+      with:
+        platform: x64
+    - name: Compile ELF example
+      run: make example
