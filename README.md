@@ -7,3 +7,7 @@
 [onlyinput](https://github.com/overlisted/onlyinput) and [rdui](https://github.com/overlisted/rdui) submodules to the
 project root
 - Check out and steal the code from `example.c`, it covers all existing elements. 
+
+## Contributing
+- Use [clang-format](https://clang.llvm.org/docs/ClangFormat.html) with the LLVM style to format your code
+- Remember that this is a header library
