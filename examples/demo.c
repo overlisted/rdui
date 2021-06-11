@@ -1,13 +1,9 @@
 #define CNFG_IMPLEMENTATION
-#define RDUI_IMPLEMENTATION
-#define ONLYINPUT_IMPLEMENTATION
 
 #include <RDUI.h>
 #include <default-elements.h>
 #include <onlyinput/onlyinput.h>
-
 #include "util.h"
-
 #include <stdio.h>
 #include <string.h>
 
