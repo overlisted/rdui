@@ -28,12 +28,12 @@ struct RDUIEventData_motion {
   int mask;
 };
 
-struct RDUINode;
+struct RDUIElement;
 
-typedef void (*RDUIEventReceiverFunction)(struct RDUINode *node,
+typedef void (*RDUIEventReceiverFunction)(struct RDUIElement *element,
                                           enum RDUIEvent event, void *data);
 
-struct RDUINode {
+struct RDUIElement {
   void *data;
 
   RDUIEventReceiverFunction event_receiver_function;
@@ -51,31 +51,31 @@ void RDUIInit() {
   // may be removed in future
 }
 
-struct RDUINode *
-RDUINewNode(void *data, RDUIEventReceiverFunction event_receiver_function) {
-  struct RDUINode *node = malloc(sizeof(struct RDUINode));
+struct RDUIElement *
+RDUINewElement(void *data, RDUIEventReceiverFunction event_receiver_function) {
+  struct RDUIElement *element = malloc(sizeof(struct RDUIElement));
 
-  node->data = data;
-  node->event_receiver_function = event_receiver_function;
+  element->data = data;
+  element->event_receiver_function = event_receiver_function;
 
-  return node;
+  return element;
 }
 
-void RDUINoOpEventReceiver(struct RDUINode *node, enum RDUIEvent event,
+void RDUINoOpEventReceiver(struct RDUIElement *element, enum RDUIEvent event,
                            void *data) {}
 
 struct RDUIMenu {
   size_t size;
-  struct RDUINode **nodes;
+  struct RDUIElement **elements;
 };
 
-#define RDUIForEachNode() for (size_t i = 0; i < menu->size; i++)
+#define RDUIForEachElement() for (size_t i = 0; i < menu->size; i++)
 
 static void RDUIDispatchEvent(struct RDUIMenu *menu, enum RDUIEvent event,
                        void *data) {
   RDUIProcessedMenu = menu;
 
-  RDUIForEachNode() menu->nodes[i]->event_receiver_function(menu->nodes[i],
+  RDUIForEachElement() menu->elements[i]->event_receiver_function(menu->elements[i],
                                                             event, data);
 
   RDUIProcessedMenu = NULL;
@@ -113,22 +113,22 @@ struct RDUIMenu *RDUINewMenu(size_t size, ...) {
 
   struct RDUIMenu *menu = malloc(sizeof(struct RDUIMenu));
   menu->size = size;
-  menu->nodes = malloc(sizeof(struct RDUINode *) * size);
+  menu->elements = malloc(sizeof(struct RDUIElement *) * size);
 
   va_start(list, size);
   for (int i = 0; i < size; i++)
-    menu->nodes[i] = va_arg(list, struct RDUINode *);
+    menu->elements[i] = va_arg(list, struct RDUIElement *);
   va_end(list);
 
   return menu;
 }
 
-void RDUIMenuPush(struct RDUIMenu *menu, struct RDUINode *node) {
+void RDUIMenuPush(struct RDUIMenu *menu, struct RDUIElement *element) {
   menu->size++;
 
-  menu->nodes = malloc(menu->size * sizeof(struct RDUINode *));
-  if (menu->nodes != NULL) {
-    menu->nodes[menu->size - 1] = node;
+  menu->elements = malloc(menu->size * sizeof(struct RDUIElement *));
+  if (menu->elements != NULL) {
+    menu->elements[menu->size - 1] = element;
   } else {
     menu->size--;
   }

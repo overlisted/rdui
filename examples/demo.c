@@ -99,10 +99,10 @@ int main(int argv, char *argc[]) {
                                                 .select_handler =
                                                     OptionsBoxSelectHandler};
 
-  struct RDUINode *button = RDUINewButton(&button_data);
-  struct RDUINode *checkbox = RDUINewCheckbox(&checkbox_data);
-  struct RDUINode *field = RDUINewField(&field_data);
-  struct RDUINode *options_box = RDUINewOptionsBox(&options_box_data);
+  struct RDUIElement *button = RDUINewButton(&button_data);
+  struct RDUIElement *checkbox = RDUINewCheckbox(&checkbox_data);
+  struct RDUIElement *field = RDUINewField(&field_data);
+  struct RDUIElement *options_box = RDUINewOptionsBox(&options_box_data);
 
   menu = RDUINewMenu(4, button, checkbox, field, options_box);
 

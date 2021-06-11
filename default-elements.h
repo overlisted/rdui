@@ -43,8 +43,8 @@ struct RDUIButtonData {
 	void (*clicked_handler)(struct RDUIButtonData* data);
 };
 
-static void RDUIButtonEventReceiver(struct RDUINode* node, enum RDUIEvent event, void* data) {
-	struct RDUIButtonData* button_data = node->data;
+static void RDUIButtonEventReceiver(struct RDUIElement* element, enum RDUIEvent event, void* data) {
+	struct RDUIButtonData* button_data = element->data;
 
 	RDUIIfEventIs(render) {
 		int button_width, button_height;
@@ -85,10 +85,10 @@ static void RDUIButtonEventReceiver(struct RDUINode* node, enum RDUIEvent event,
 	}
 }
 
-struct RDUINode* RDUINewButton(struct RDUIButtonData* data) {
+struct RDUIElement* RDUINewButton(struct RDUIButtonData* data) {
 	data->is_held = 0;
 
-	return RDUINewNode(data, RDUIButtonEventReceiver);
+	return RDUINewElement(data, RDUIButtonEventReceiver);
 }
 
 struct RDUICheckboxData {
@@ -104,8 +104,8 @@ struct RDUICheckboxData {
 	void (*deactivate_handler)(struct RDUICheckboxData* data);
 };
 
-static void RDUICheckboxEventReceiver(struct RDUINode* node, enum RDUIEvent event, void* data) {
-	struct RDUICheckboxData* checkbox_data = node->data;
+static void RDUICheckboxEventReceiver(struct RDUIElement* element, enum RDUIEvent event, void* data) {
+	struct RDUICheckboxData* checkbox_data = element->data;
 
 	RDUIIfEventIs(render) {
 		int drawn_color = checkbox_data->color;
@@ -152,10 +152,10 @@ static void RDUICheckboxEventReceiver(struct RDUINode* node, enum RDUIEvent even
 	}
 }
 
-struct RDUINode* RDUINewCheckbox(struct RDUICheckboxData* data) {
+struct RDUIElement* RDUINewCheckbox(struct RDUICheckboxData* data) {
 	data->is_held = 0;
 
-	return RDUINewNode(data, RDUICheckboxEventReceiver);
+	return RDUINewElement(data, RDUICheckboxEventReceiver);
 }
 
 extern struct RDUIFieldData* RDUIFocusedField;
@@ -181,8 +181,8 @@ static void PutCursorInValidState(struct RDUIFieldData* field) {
 	if(field->cursor > length) field->cursor = length;
 }
 
-static void RDUIFieldEventReceiver(struct RDUINode* node, enum RDUIEvent event, void* data) {
-	struct RDUIFieldData* field_data = node->data;
+static void RDUIFieldEventReceiver(struct RDUIElement* element, enum RDUIEvent event, void* data) {
+	struct RDUIFieldData* field_data = element->data;
 
 	int text_width, text_height;
 	CNFGGetTextExtents(field_data->value, &text_width, &text_height, field_data->font_size);
@@ -265,7 +265,7 @@ static void RDUIFieldEventReceiver(struct RDUINode* node, enum RDUIEvent event, 
 	}
 }
 
-struct RDUINode* RDUINewField(struct RDUIFieldData* data) {
+struct RDUIElement* RDUINewField(struct RDUIFieldData* data) {
 	if(!data->value || *data->value == '\0') {
 		data->value = calloc(1, 1);
 		data->cursor = 0;
@@ -274,7 +274,7 @@ struct RDUINode* RDUINewField(struct RDUIFieldData* data) {
 		data->cursor = strlen(data->value);
 	}
 
-	return RDUINewNode(data, RDUIFieldEventReceiver);
+	return RDUINewElement(data, RDUIFieldEventReceiver);
 }
 
 struct RDUIOptionsBoxData {
@@ -321,8 +321,8 @@ static void RenderOptions(struct RDUIOptionsBoxData* data, int option_width, int
 	}
 }
 
-static void RDUIOptionsBoxEventReceiver(struct RDUINode* node, enum RDUIEvent event, void* data) {
-	struct RDUIOptionsBoxData* options_box_data = node->data;
+static void RDUIOptionsBoxEventReceiver(struct RDUIElement* element, enum RDUIEvent event, void* data) {
+	struct RDUIOptionsBoxData* options_box_data = element->data;
 
 	int width = 0, height = 0;
 	for(size_t i = 0; options_box_data->options[i] != NULL; i++) {
@@ -397,7 +397,7 @@ static void RDUIOptionsBoxEventReceiver(struct RDUINode* node, enum RDUIEvent ev
 	}
 }
 
-struct RDUINode* RDUINewOptionsBox(struct RDUIOptionsBoxData* data) {
+struct RDUIElement* RDUINewOptionsBox(struct RDUIOptionsBoxData* data) {
 	size_t options_count = 0;
 	while(data->options[options_count] != NULL) options_count++;
 
@@ -406,5 +406,5 @@ struct RDUINode* RDUINewOptionsBox(struct RDUIOptionsBoxData* data) {
 	data->is_held = 0;
 	data->is_open = 0;
 
-	return RDUINewNode(data, RDUIOptionsBoxEventReceiver);
+	return RDUINewElement(data, RDUIOptionsBoxEventReceiver);
 }
