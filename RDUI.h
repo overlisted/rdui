@@ -71,7 +71,7 @@ struct RDUIMenu {
 
 #define RDUIForEachNode() for (size_t i = 0; i < menu->size; i++)
 
-void RDUIDispatchEvent(struct RDUIMenu *menu, enum RDUIEvent event,
+static void RDUIDispatchEvent(struct RDUIMenu *menu, enum RDUIEvent event,
                        void *data) {
   RDUIProcessedMenu = menu;
 
@@ -82,6 +82,10 @@ void RDUIDispatchEvent(struct RDUIMenu *menu, enum RDUIEvent event,
 }
 
 // Handlers for rawdraw events
+void RDUIRenderFrame(struct RDUIMenu *menu) {
+    RDUIDispatchEvent(menu, RDUIEvent_render, NULL);
+}
+
 void RDUIHandleKeyImpl(struct RDUIMenu *menu, int keycode, int bDown) {
   struct RDUIEventData_key event = {.keycode = keycode, .bDown = bDown};
   RDUIDispatchEvent(menu, RDUIEvent_key, &event);

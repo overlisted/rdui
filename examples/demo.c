@@ -114,7 +114,7 @@ int main(int argv, char *argc[]) {
 
     CNFGColor(0x444444ff);
 
-    RDUIDispatchEvent(menu, RDUIEvent_render, NULL);
+    RDUIRenderFrame(menu);
     if (options_box_data.selected_index == 2) {
       CNFGColor(0);
       CNFGPenX = 200;
