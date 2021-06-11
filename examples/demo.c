@@ -52,7 +52,10 @@ void OptionsBoxSelectHandler(struct RDUIOptionsBoxData* data) {
 }
 
 void FieldTypeHandler(struct RDUIFieldData* data) {
-	if(!strcmp(data->value, "demo")) UtilStringChange(data->value, "example");
+	if(!strcmp(data->value, "example")) {
+	    UtilStringChange(data->value, "demo");
+	    data->cursor = 4;
+	}
 }
 
 int main(int argv, char* argc[]) {
