@@ -20,8 +20,8 @@ jobs:
       uses: egor-tensin/setup-mingw@v2
       with:
         platform: x86
-    - name: Compile PE example
-      run: make example.exe
+    - name: Compile PE demo
+      run: make demo.exe
 
   compile-gnu:
     runs-on: ubuntu-latest
@@ -36,5 +36,5 @@ jobs:
       uses: egor-tensin/setup-gcc@v1
       with:
         platform: x64
-    - name: Compile ELF example
-      run: make example
+    - name: Compile ELF demo
+      run: make demo
